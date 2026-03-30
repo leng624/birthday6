@@ -17,6 +17,45 @@ export const CONFIG = {
     mailboxLetters: "timecap_mailbox_letters_v1",
     timeMailboxLetters: "timecap_time_letters_v1",
     timeMailboxOpened: "timecap_time_opened_v1",
+    uploadedPhotos: "timecap_uploaded_photos_v1",
+    musicSettings: "timecap_music_settings_v1",
+    appSettings: "timecap_app_settings_v1",
+  },
+
+  // 季节音乐：先占位，后续你上传音频文件后替换 src 即可
+  seasonalMusic: {
+    intro:
+      "四季各有一首曲目。当前季节会优先高亮。未配置音频文件时显示占位状态。",
+    tracks: [
+      {
+        id: "music-spring",
+        season: "spring",
+        label: "春 · 微光",
+        src: "",
+        suggestedPath: "./static/music/spring.mp3",
+      },
+      {
+        id: "music-summer",
+        season: "summer",
+        label: "夏 · 风面",
+        src: "",
+        suggestedPath: "./static/music/summer.mp3",
+      },
+      {
+        id: "music-autumn",
+        season: "autumn",
+        label: "秋 · 余温",
+        src: "",
+        suggestedPath: "./static/music/autumn.mp3",
+      },
+      {
+        id: "music-winter",
+        season: "winter",
+        label: "冬 · 慢雪",
+        src: "",
+        suggestedPath: "./static/music/winter.mp3",
+      },
+    ],
   },
 
   // 低饱和度色彩与文案（避免过度装饰；统一氛围）
@@ -136,6 +175,15 @@ export const CONFIG = {
       caption: "街灯的轮廓像薄薄的纸",
     },
   ],
+
+  albumUpload: {
+    title: "本地上传",
+    intro: "支持一次选择多张图片，保存到浏览器本地（仅当前设备可见）。",
+    addButton: "选择图片",
+    clearButton: "清空本地上传",
+    noData: "还没有本地上传图片。",
+    persistNote: "仅本地存储，不会上传到服务器。",
+  },
 
   mailbox: {
     title: "信箱",

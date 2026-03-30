@@ -55,6 +55,50 @@ a {
   mix-blend-mode: soft-light;
 }
 
+#bootSplash {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  background: rgba(247, 242, 234, 0.78);
+  backdrop-filter: blur(16px);
+  transition: opacity 320ms ease;
+}
+
+#bootSplash.isHidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.bootCard {
+  width: min(420px, 88vw);
+  border-radius: 22px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.55);
+  box-shadow: 0 28px 90px rgba(15, 18, 22, 0.12);
+  padding: 22px 18px;
+}
+
+.bootTitle {
+  font-weight: 820;
+  letter-spacing: -0.02em;
+  font-size: 20px;
+  color: rgba(20, 20, 25, 0.92);
+}
+
+.bootLine {
+  height: 1px;
+  background: rgba(0, 0, 0, 0.08);
+  margin: 12px 0;
+}
+
+.bootSub {
+  color: rgba(20, 20, 25, 0.62);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
 .appRoot {
   position: relative;
   z-index: 1;
@@ -152,6 +196,123 @@ a {
   display: flex;
   gap: 12px;
   margin-top: 18px;
+}
+
+.musicPanel {
+  margin-top: 18px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 18px;
+  padding: 14px 12px;
+  background: rgba(255, 255, 255, 0.42);
+}
+
+.musicHead {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: baseline;
+}
+
+.musicTitle {
+  margin: 0;
+  font-size: 14.5px;
+  font-weight: 700;
+}
+
+.musicHint {
+  font-size: 12px;
+  color: rgba(20, 20, 25, 0.58);
+  text-transform: uppercase;
+}
+
+.musicIntro {
+  margin: 8px 0 0;
+  color: rgba(20, 20, 25, 0.7);
+  line-height: 1.65;
+  font-size: 12.8px;
+}
+
+.musicGrid {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.musicItem {
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  background: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  padding: 10px 10px;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  align-items: center;
+  font-size: 12.8px;
+}
+
+.musicItem small {
+  color: rgba(20, 20, 25, 0.56);
+}
+
+.musicItem.isCurrentSeason {
+  border-color: rgba(0, 0, 0, 0.18);
+}
+
+.musicItem.isActive {
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: 0 10px 28px rgba(10, 10, 15, 0.08);
+}
+
+.musicActions {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.musicStatus {
+  color: rgba(20, 20, 25, 0.62);
+  font-size: 12.5px;
+  line-height: 1.6;
+}
+
+.settingsPanel {
+  margin-top: 14px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  padding-top: 12px;
+}
+
+.settingsTitle {
+  font-size: 13.5px;
+  font-weight: 700;
+}
+
+.settingsGrid {
+  margin-top: 8px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+
+.settingsItem {
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.44);
+  border-radius: 12px;
+  padding: 10px;
+}
+
+.settingsLabel {
+  font-size: 12.8px;
+  color: rgba(20, 20, 25, 0.84);
+}
+
+.settingsActions {
+  margin-top: 8px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
 .linkBtn {
@@ -253,6 +414,26 @@ a {
   margin-top: 16px;
 }
 
+.galleryToolRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.galleryToolGroup {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.selectInput {
+  width: 124px;
+  max-width: unset;
+  padding: 9px 10px;
+}
+
 .gallery {
   display: flex;
   gap: 18px;
@@ -264,6 +445,22 @@ a {
 }
 .gallery::-webkit-scrollbar {
   display: none;
+}
+
+.gallery.timeline {
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 48vh;
+}
+
+.gallery.timeline .photoCard {
+  min-width: 100%;
+  max-width: 100%;
+}
+
+.gallery.timeline .photoImageFrame img {
+  height: 220px;
 }
 
 .photoCard {
@@ -361,6 +558,85 @@ a {
 }
 .galleryArrow.right::before {
   transform: rotate(-45deg);
+}
+
+.uploadPanel {
+  margin-top: 12px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  padding-top: 14px;
+}
+
+.uploadHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.uploadTitle {
+  margin: 0;
+  font-size: 14.5px;
+  font-weight: 700;
+}
+
+.uploadHint {
+  font-size: 12px;
+  color: rgba(20, 20, 25, 0.58);
+}
+
+.uploadActions {
+  margin-top: 10px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.uploadBtn {
+  cursor: pointer;
+}
+
+.uploadList {
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  padding-top: 10px;
+}
+
+.uploadItem {
+  display: grid;
+  grid-template-columns: 18px 70px 1fr auto;
+  gap: 10px;
+  align-items: center;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 14px;
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.48);
+  margin-bottom: 8px;
+}
+
+.uploadCheck {
+  width: 16px;
+  height: 16px;
+}
+
+.uploadThumb {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.uploadMeta {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 6px;
+}
+
+.uploadInput {
+  width: 100%;
+  max-width: unset;
+  padding: 8px 10px;
+  font-size: 12.5px;
 }
 
 /* 全屏轻弹窗 */
@@ -835,6 +1111,16 @@ a {
   }
   .wheelCenter {
     inset: 40px;
+  }
+  .musicGrid {
+    grid-template-columns: 1fr;
+  }
+  .uploadItem {
+    grid-template-columns: 18px 58px 1fr;
+  }
+  .uploadThumb {
+    width: 58px;
+    height: 58px;
   }
 }
 
