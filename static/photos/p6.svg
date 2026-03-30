@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="520" viewBox="0 0 800 520">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#d8ecf7" stop-opacity="0.95"/>
+      <stop offset="0.55" stop-color="#f3f0ea" stop-opacity="0.98"/>
+      <stop offset="1" stop-color="#d9cbbf" stop-opacity="0.92"/>
+    </linearGradient>
+    <filter id="n" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.83" numOctaves="2" stitchTiles="stitch"/>
+      <feColorMatrix type="matrix" values="
+        1 0 0 0 0
+        0 1 0 0 0
+        0 0 1 0 0
+        0 0 0 .08 0"/>
+    </filter>
+  </defs>
+  <rect width="800" height="520" fill="url(#g)"/>
+  <rect width="800" height="520" filter="url(#n)" opacity="0.55"/>
+  <path d="M50 430 L160 360 L260 400 L360 330 L460 350 L590 280 L740 310" fill="none" stroke="#2a2a3a" stroke-opacity="0.10" stroke-width="2"/>
+  <path d="M70 170 L200 150 L330 210 L470 180 L620 220 L760 200" fill="none" stroke="#2a2a3a" stroke-opacity="0.07" stroke-width="2"/>
+  <circle cx="250" cy="280" r="68" fill="#ffffff" fill-opacity="0.10"/>
+  <circle cx="580" cy="190" r="54" fill="#ffffff" fill-opacity="0.12"/>
+</svg>
+

@@ -1,0 +1,840 @@
+:root {
+  --text: rgba(33, 33, 40, 0.92);
+  --muted: rgba(33, 33, 40, 0.62);
+  --line: rgba(20, 20, 25, 0.12);
+  --panel: rgba(255, 255, 255, 0.58);
+  --panel-strong: rgba(255, 255, 255, 0.72);
+  --shadow: 0 18px 60px rgba(15, 18, 22, 0.12);
+  --radius-xl: 28px;
+  --radius-lg: 20px;
+  --radius-md: 14px;
+  --radius-sm: 12px;
+
+  /* 运行时会被 app.js 覆盖的主题变量 */
+  --bg: radial-gradient(circle at 50% 30%, rgba(245, 241, 232, 1), rgba(250, 246, 240, 1));
+  --accent1: #d1b08a;
+  --accent2: #ffffff;
+  --accent3: #a6c6de;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden; /* 禁用页面滚动条，使用全屏切换 */
+  background: #f7f2ea;
+  color: var(--text);
+  font-family: Inter, "SF Pro Display", system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC",
+    "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+#particleCanvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+#grainOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.18;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E");
+  mix-blend-mode: soft-light;
+}
+
+.appRoot {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  background: var(--bg);
+}
+
+.fullpage {
+  width: 100%;
+  height: 500vh; /* 5 个板块，每个 100vh */
+  transform: translate3d(0, 0, 0);
+  transition: transform 650ms cubic-bezier(0.2, 0.9, 0.25, 1);
+}
+
+.panel {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px 18px;
+  position: relative;
+}
+
+.panelInner {
+  width: min(940px, 92vw);
+}
+
+.panelCard {
+  background: var(--panel);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: var(--radius-xl);
+  padding: 30px 24px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(16px);
+}
+
+.panelTitle {
+  margin: 0;
+  font-size: 20px;
+  letter-spacing: 0.2px;
+  font-weight: 650;
+}
+
+.panelLead {
+  margin: 12px 0 0;
+  color: var(--muted);
+  line-height: 1.8;
+  font-size: 14.5px;
+}
+
+.homeHero {
+  text-align: left;
+  padding: 10px 8px 0;
+}
+
+.brandRow {
+  display: flex;
+  gap: 14px;
+  align-items: baseline;
+}
+
+.brandMark {
+  font-weight: 820;
+  font-size: clamp(32px, 4vw, 44px);
+  letter-spacing: -0.02em;
+}
+
+.brandSub {
+  color: var(--muted);
+  font-size: 13.5px;
+  letter-spacing: 0.3px;
+}
+
+.homeTextBlock {
+  margin-top: 18px;
+}
+
+.homeTextMain {
+  font-size: 16.5px;
+  line-height: 1.85;
+  margin: 0;
+  color: rgba(25, 25, 34, 0.92);
+}
+
+.homeTextTail {
+  margin-top: 12px;
+  color: var(--muted);
+  line-height: 1.85;
+  font-size: 14.5px;
+}
+
+.homeLinks {
+  display: flex;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.linkBtn {
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  padding: 10px 14px;
+  border-radius: 999px;
+  color: rgba(25, 25, 34, 0.9);
+  background: rgba(255, 255, 255, 0.36);
+  backdrop-filter: blur(10px);
+  transition: transform 180ms ease, background 180ms ease, box-shadow 180ms ease;
+  font-size: 13.5px;
+}
+
+.linkBtn:hover {
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.52);
+  box-shadow: 0 12px 34px rgba(10, 10, 15, 0.12);
+}
+
+.dotsNav {
+  position: fixed;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 10px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.32);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  backdrop-filter: blur(14px);
+}
+
+.navDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.20);
+  background: rgba(0, 0, 0, 0.04);
+  cursor: pointer;
+  position: relative;
+  transition: transform 180ms ease, background 180ms ease, width 180ms ease;
+}
+
+.navDot:hover {
+  transform: scale(1.1);
+}
+
+.navDot.isActive {
+  width: 18px;
+  background: rgba(0, 0, 0, 0.14);
+}
+
+.navDot:hover::after {
+  content: attr(data-title);
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 10px);
+  transform: translateX(-50%);
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.8);
+  color: rgba(20, 20, 25, 0.86);
+  font-size: 12px;
+  white-space: nowrap;
+  box-shadow: 0 18px 60px rgba(15, 18, 22, 0.12);
+  backdrop-filter: blur(14px);
+}
+
+.panelInner {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 480ms ease, transform 560ms cubic-bezier(0.2, 0.9, 0.25, 1);
+}
+
+.panel.isActive .panelInner {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 加载淡入（顺序触发：由 app.js 添加 .isVisible） */
+[data-animate] {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+[data-animate].isVisible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 520ms ease, transform 620ms cubic-bezier(0.2, 0.9, 0.25, 1);
+}
+
+/* 相册 */
+.galleryWrap {
+  position: relative;
+  margin-top: 16px;
+}
+
+.gallery {
+  display: flex;
+  gap: 18px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  padding: 8px 6px 14px;
+  scrollbar-width: none; /* Firefox */
+}
+.gallery::-webkit-scrollbar {
+  display: none;
+}
+
+.photoCard {
+  min-width: 230px;
+  max-width: 230px;
+  scroll-snap-align: start;
+  cursor: pointer;
+  border-radius: 18px;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.photoCard:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 18px 60px rgba(10, 10, 15, 0.12);
+}
+
+.photoImageFrame {
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.44);
+}
+
+.photoImageFrame img {
+  width: 100%;
+  height: 190px;
+  object-fit: cover;
+  display: block;
+  transform: scale(1.0);
+  transition: transform 220ms ease;
+}
+
+.photoCard:hover .photoImageFrame img {
+  transform: scale(1.06);
+}
+
+.photoMeta {
+  padding: 12px 8px 0;
+}
+
+.photoDate {
+  font-size: 12.5px;
+  color: rgba(20, 20, 25, 0.70);
+}
+
+.photoLocation {
+  margin-top: 4px;
+  font-size: 12.5px;
+  color: rgba(20, 20, 25, 0.54);
+}
+
+.photoCaption {
+  margin-top: 10px;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: rgba(20, 20, 25, 0.86);
+}
+
+.galleryArrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(12px);
+  cursor: pointer;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  transition: transform 160ms ease, background 160ms ease;
+}
+
+.galleryArrow:hover {
+  transform: translateY(-50%) scale(1.04);
+  background: rgba(255, 255, 255, 0.74);
+}
+
+.galleryArrow.left {
+  left: 2px;
+}
+.galleryArrow.right {
+  right: 2px;
+}
+
+.galleryArrow::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-right: 1.8px solid rgba(0, 0, 0, 0.52);
+  border-bottom: 1.8px solid rgba(0, 0, 0, 0.52);
+  transform: rotate(135deg);
+}
+.galleryArrow.right::before {
+  transform: rotate(-45deg);
+}
+
+/* 全屏轻弹窗 */
+.modalBackdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 20, 25, 0.42);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  backdrop-filter: blur(10px);
+}
+
+.modalCard {
+  width: min(980px, 96vw);
+  border-radius: 26px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: 0 38px 120px rgba(0, 0, 0, 0.22);
+  overflow: hidden;
+  transform-origin: center;
+  animation: modalPop 220ms cubic-bezier(0.2, 0.9, 0.25, 1) both;
+}
+
+@keyframes modalPop {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.modalTopBar {
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  padding: 14px 14px 0;
+}
+
+.modalClose {
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  background: rgba(255, 255, 255, 0.45);
+  cursor: pointer;
+  position: relative;
+}
+
+.modalClose::before,
+.modalClose::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 18px;
+  height: 1.4px;
+  background: rgba(0, 0, 0, 0.48);
+}
+.modalClose::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+.modalClose::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.modalBody {
+  padding: 10px 18px 22px;
+}
+
+.modalImage {
+  width: 100%;
+  max-height: 58vh;
+  object-fit: cover;
+  border-radius: 18px;
+  display: block;
+}
+
+.modalText {
+  margin-top: 12px;
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  flex-wrap: wrap;
+  color: rgba(20, 20, 25, 0.74);
+  font-size: 13px;
+}
+
+.modalCaption {
+  margin-top: 10px;
+  color: rgba(20, 20, 25, 0.88);
+  line-height: 1.8;
+  font-size: 14.5px;
+}
+
+/* 解密 */
+.glassPanel {
+  background: rgba(255, 255, 255, 0.46);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: var(--radius-xl);
+  padding: 22px 18px;
+  backdrop-filter: blur(16px);
+  box-shadow: 0 18px 60px rgba(10, 10, 15, 0.10);
+}
+
+.puzzleGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.puzzleCard {
+  perspective: 1000px;
+}
+
+.puzzleInner {
+  position: relative;
+  width: 100%;
+  min-height: 120px;
+  transform-style: preserve-3d;
+  transition: transform 520ms cubic-bezier(0.2, 0.9, 0.25, 1);
+}
+
+.puzzleCard.isSolved .puzzleInner {
+  transform: rotateY(180deg);
+}
+
+.puzzleFace {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: 18px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  background: rgba(255, 255, 255, 0.55);
+  padding: 16px 14px;
+}
+
+.puzzleBack {
+  transform: rotateY(180deg);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.checkMark {
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(34, 197, 94, 0.35);
+  color: rgba(34, 197, 94, 0.92);
+  font-weight: 900;
+}
+
+.puzzleTitleRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: baseline;
+}
+
+.puzzleName {
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  font-size: 14px;
+  color: rgba(20, 20, 25, 0.90);
+}
+
+.puzzleHint {
+  color: rgba(20, 20, 25, 0.58);
+  font-size: 12.5px;
+}
+
+.puzzleQuestion {
+  margin-top: 10px;
+  color: rgba(20, 20, 25, 0.82);
+  line-height: 1.7;
+  font-size: 13.5px;
+}
+
+.fieldRow {
+  margin-top: 12px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.textInput {
+  width: 220px;
+  max-width: 65vw;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: rgba(255, 255, 255, 0.6);
+  color: rgba(20, 20, 25, 0.92);
+  outline: none;
+}
+.textInput:focus {
+  border-color: rgba(0, 0, 0, 0.24);
+}
+
+.btnOutline {
+  border: 1px solid rgba(0, 0, 0, 0.14);
+  background: transparent;
+  border-radius: 999px;
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: transform 180ms ease, background 180ms ease;
+  color: rgba(20, 20, 25, 0.92);
+  font-size: 13.5px;
+}
+
+.btnOutline:hover {
+  background: rgba(255, 255, 255, 0.45);
+  transform: translateY(-1px);
+}
+
+.msgError {
+  margin-top: 10px;
+  color: rgba(220, 38, 38, 0.92);
+  font-size: 12.5px;
+}
+
+/* 轮盘 */
+.wheelArea {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.wheelWrap {
+  width: 170px;
+  height: 170px;
+  position: relative;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.42);
+}
+
+.wheel {
+  position: absolute;
+  inset: 0;
+  display: block;
+  border-radius: 999px;
+  transform: rotate(0deg);
+  transition: transform 520ms cubic-bezier(0.2, 0.9, 0.25, 1);
+}
+
+.wheelCenter {
+  position: absolute;
+  inset: 46px;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.52);
+}
+
+.wheelPointer {
+  position: absolute;
+  left: 50%;
+  top: 10px;
+  transform: translateX(-50%);
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.20);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.wheelSegment {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  transform-origin: 0 0;
+  cursor: pointer;
+  user-select: none;
+}
+
+.wheelSegment span {
+  display: inline-block;
+  padding: 8px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.58);
+  color: rgba(20, 20, 25, 0.82);
+  font-weight: 650;
+  font-size: 13px;
+}
+
+.finalBox {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.hiddenReveal {
+  margin-top: 14px;
+  padding: 16px 14px;
+  border-radius: 18px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.hiddenRevealTitle {
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  margin: 0;
+  font-size: 14px;
+}
+
+.hiddenRevealBody {
+  margin-top: 8px;
+  color: rgba(20, 20, 25, 0.80);
+  line-height: 1.8;
+  font-size: 13.5px;
+}
+
+.hiddenRevealImage {
+  width: 100%;
+  max-height: 240px;
+  object-fit: cover;
+  border-radius: 16px;
+  margin-top: 12px;
+  display: block;
+}
+
+/* 信箱 */
+.mailLayout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+.textarea {
+  width: 100%;
+  min-height: 110px;
+  resize: vertical;
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: rgba(255, 255, 255, 0.60);
+  padding: 12px 14px;
+  color: rgba(20, 20, 25, 0.92);
+  outline: none;
+  line-height: 1.7;
+  font-size: 14px;
+}
+.textarea:focus {
+  border-color: rgba(0, 0, 0, 0.22);
+}
+
+.mailActionRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.counterText {
+  color: rgba(20, 20, 25, 0.56);
+  font-size: 12.5px;
+}
+
+.list {
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  padding-top: 14px;
+}
+
+.letterItem {
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.50);
+  border-radius: 18px;
+  padding: 12px 12px;
+  margin-bottom: 12px;
+}
+
+.letterHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  cursor: pointer;
+}
+
+.letterPreview {
+  color: rgba(20, 20, 25, 0.84);
+  font-size: 13.5px;
+  line-height: 1.6;
+  max-width: 75%;
+}
+
+.letterDateRight {
+  color: rgba(20, 20, 25, 0.56);
+  font-size: 12.5px;
+  white-space: nowrap;
+}
+
+.letterBody {
+  margin-top: 10px;
+  color: rgba(20, 20, 25, 0.82);
+  line-height: 1.8;
+  font-size: 14px;
+  white-space: pre-wrap;
+}
+
+.sealBox {
+  border-radius: var(--radius-xl);
+  background: rgba(255, 255, 255, 0.44);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  padding: 22px 18px;
+  backdrop-filter: blur(16px);
+}
+
+.unlockRow {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.sealMeta {
+  color: rgba(20, 20, 25, 0.66);
+  line-height: 1.7;
+  font-size: 13.5px;
+}
+
+.timeLetters {
+  margin-top: 14px;
+}
+
+.exportHint {
+  color: rgba(20, 20, 25, 0.58);
+  font-size: 12.5px;
+  margin-top: 8px;
+}
+
+/* 让某些内容区域允许内部滚动，但不影响整页隐藏滚动条 */
+.internalScroll {
+  overflow: auto;
+  max-height: 55vh;
+  padding-right: 4px;
+}
+
+@media (max-width: 680px) {
+  .panel {
+    padding: 16px 12px;
+  }
+  .panelCard {
+    padding: 24px 16px;
+  }
+  .photoCard {
+    min-width: 208px;
+    max-width: 208px;
+  }
+  .wheelWrap {
+    width: 152px;
+    height: 152px;
+  }
+  .wheelCenter {
+    inset: 40px;
+  }
+}
+
