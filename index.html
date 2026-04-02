@@ -187,6 +187,12 @@
       50%{ opacity:.22; }
     }
 
+    /* 移动端额外降负：取消“呼吸类”长时无限动画，滚动更顺滑 */
+    @media (max-width: 420px){
+      .card.activated::before{ animation: bgIn 650ms var(--easeSoft) both !important; }
+      .card.activated::after{ animation:none !important; }
+    }
+
     /* 海风图标装饰层：更像手账贴纸，随章节首次激活淡入 */
     .sea-ornament-layer{
       position:absolute;
@@ -368,44 +374,8 @@
     .nav-btn.right{ right:14px; }
     .nav-btn svg{ width:18px; height:18px; }
 
-    /* 全局音乐播放器（单例，切换章节不重载） */
+    /* 音频仍保留但不再提供右下角播放卡片（性能/交互优先） */
     audio#bgmAudio{ display:none; }
-    .music-player{
-      position:fixed;
-      right:14px;
-      bottom: calc(14px + var(--safe-bottom));
-      z-index:70;
-      width:min(360px, calc(100vw - 28px));
-      padding:12px 12px;
-      border-radius:999px;
-      border: 1px solid rgba(42,108,255,.18);
-      background: rgba(255,255,255,.68);
-      backdrop-filter: blur(14px);
-      box-shadow: 0 22px 70px rgba(10,60,120,.14);
-      display:flex; align-items:center; gap:10px;
-    }
-    .music-btn{
-      width:42px; height:42px;
-      border-radius:999px;
-      border: 1px solid rgba(42,108,255,.18);
-      background: linear-gradient(180deg, rgba(42,165,255,.24), rgba(42,108,255,.08));
-      display:flex; align-items:center; justify-content:center;
-      cursor:pointer;
-      -webkit-tap-highlight-color: transparent;
-      user-select:none;
-    }
-    .music-meta{ flex:1; min-width:0; display:flex; flex-direction:column; gap:2px; }
-    .music-title{
-      font-size:12px;
-      color: rgba(11,59,91,.90);
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      letter-spacing:.2px;
-    }
-    .music-hint{ font-size:11px; color: rgba(11,59,91,.62); }
-    .vol{ width:120px; display:flex; align-items:center; gap:10px; padding-left:6px; }
-    .vol input[type="range"]{ width:110px; accent-color: var(--accent); }
 
     /* 音频可用性：优先 wav 占位 + mp3 按要求预留 */
 
@@ -1065,11 +1035,6 @@
       cursor:pointer;
       background: rgba(255,255,255,.78);
       color: rgba(11,59,91,.88);
-      transition: transform 180ms var(--easeSoft), opacity 180ms var(--easeSoft);
-      will-change: transform, opacity;
-    }
-    .spider-tile.dragging{
-      opacity: .08;
     }
     .spider-tile.faceDown{
       background: linear-gradient(180deg, rgba(42,108,255,.18), rgba(255,255,255,.55));
@@ -1137,19 +1102,73 @@
       line-height:1.6;
     }
 
-    .spider-ghost{
-      position:fixed;
-      left:0; top:0;
-      z-index:260;
-      pointer-events:none;
-      transform: translate3d(-9999px,-9999px,0);
-      transition: transform 220ms var(--easeSoft);
-      will-change: transform;
+    /* 页面 8：结尾寄语 & 页面 9：你想对我说 */
+    .end-page .end-message{
+      margin-top:4px;
+      padding:18px 16px;
+      border-radius:22px;
+      background: rgba(255,255,255,.70);
+      border:1px solid rgba(42,108,255,.16);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 18px 55px rgba(10,60,120,.10);
+      position:relative;
+      overflow:hidden;
     }
-    .spider-ghost .spider-tile{
-      box-shadow: 0 22px 70px rgba(10,60,120,.16);
-      transform: translate3d(0,0,0) rotate(-2deg);
-      opacity: .98;
+    .end-page .end-message::before{
+      content:"";
+      position:absolute;
+      inset:-60% -30% auto auto;
+      width:260px;
+      height:260px;
+      border-radius:999px;
+      background: radial-gradient(circle at 30% 30%, rgba(59,188,255,.20), transparent 56%);
+      transform: rotate(-10deg);
+      opacity:.95;
+    }
+    .end-page .end-message .end-text{
+      position:relative;
+      z-index:2;
+      font-family:"Playfair Display",serif;
+      font-size: clamp(18px, 5.4vw, 26px);
+      line-height:1.45;
+      letter-spacing:.2px;
+      color: rgba(11,59,91,.92);
+    }
+    .end-jump-btn{
+      position:absolute;
+      right:16px;
+      bottom: calc(16px + var(--safe-bottom));
+      z-index:5;
+      width: min(260px, 88vw);
+      padding:12px 14px;
+      border-radius:999px;
+      border:1px solid rgba(42,108,255,.18);
+      background: linear-gradient(180deg, rgba(59,188,255,.22), rgba(255,255,255,.70));
+      backdrop-filter: blur(12px);
+      box-shadow: 0 22px 70px rgba(10,60,120,.14);
+      color: rgba(11,59,91,.96);
+      font-weight:900;
+      letter-spacing:.2px;
+      cursor:pointer;
+      -webkit-tap-highlight-color: transparent;
+      user-select:none;
+    }
+    .end-jump-btn:active{ transform: scale(.99); }
+
+    .user-say .user-say-card{
+      margin-top:6px;
+      padding:18px 16px;
+      border-radius:22px;
+      background: rgba(255,255,255,.70);
+      border:1px solid rgba(42,108,255,.16);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 18px 55px rgba(10,60,120,.10);
+    }
+    .user-say .user-say-placeholder{
+      min-height: 120px;
+      border-radius:18px;
+      border: 1px dashed rgba(42,108,255,.22);
+      background: rgba(255,255,255,.40);
     }
 
     @media (prefers-reduced-motion: reduce){
@@ -1201,21 +1220,6 @@
       <source src="audio/bgm.wav" type="audio/wav">
       <source src="audio/bgm.mp3" type="audio/mpeg">
     </audio>
-
-    <div class="music-player" role="group" aria-label="背景音乐播放器">
-      <div class="music-btn" id="musicBtn" aria-label="播放/暂停">
-        <svg id="musicIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M8 5v14l11-7z"></path>
-        </svg>
-      </div>
-      <div class="music-meta">
-        <div class="music-title">专属 BGM</div>
-        <div class="music-hint" id="musicHint">点击播放（audio/bgm.mp3 可替换）</div>
-      </div>
-      <div class="vol" aria-label="音量">
-        <input id="volRange" type="range" min="0" max="1" step="0.01" value="0.65" />
-      </div>
-    </div>
 
     <canvas id="confettiCanvas" aria-hidden="true"></canvas>
     <div class="heart-floats" id="heartFloats" aria-hidden="true"></div>
@@ -1645,6 +1649,46 @@
           </div>
         </div>
       </section>
+
+      <!-- =============== 第 8 页：结尾寄语 =============== -->
+      <section class="card end-page" data-index="7" aria-label="结尾寄语">
+        <div class="sea-ornament-layer" aria-hidden="true">
+          <div class="sea-orn reveal" style="--d:120ms; left:-10px; top:110px;">🌙</div>
+          <div class="sea-orn small reveal" style="--d:180ms; right:-8px; top:160px;">🫧</div>
+          <div class="sea-orn reveal" style="--d:240ms; left:28px; bottom:120px;">🦋</div>
+        </div>
+
+        <div class="content">
+          <div class="kicker reveal" style="--d:70ms;">结尾寄语</div>
+          <div class="end-message reveal" style="--d:130ms;">
+            <div class="end-text">
+              希望有无数个有你的明天，也期待着与你一起度过每一个值得留念的日子。
+            </div>
+          </div>
+        </div>
+
+        <button id="endJumpBtn" class="end-jump-btn reveal" style="--d:200ms;" type="button">
+          看看我想对你说的话
+        </button>
+      </section>
+
+      <!-- =============== 第 9 页：你想对我说（代码留空） =============== -->
+      <section class="card user-say" data-index="8" aria-label="你想对我说">
+        <div class="sea-ornament-layer" aria-hidden="true">
+          <div class="sea-orn reveal" style="--d:120ms; left:-10px; top:120px;">✉️</div>
+          <div class="sea-orn small reveal" style="--d:180ms; right:-8px; top:170px;">⭐</div>
+          <div class="sea-orn reveal" style="--d:240ms; left:26px; bottom:120px;">🌊</div>
+        </div>
+
+        <div class="content">
+          <div class="kicker reveal" style="--d:70ms;">留给你的那句话</div>
+          <div class="user-say-card reveal" style="--d:130ms;">
+            <!-- TODO: 在这里填写你想对她说的话（保持代码为空也可以） -->
+            <div id="userSayPlaceholder" class="user-say-placeholder"></div>
+          </div>
+          <!-- 你也可以在下面继续加自定义元素/样式 -->
+        </div>
+      </section>
     </div>
   </div>
 
@@ -1724,6 +1768,14 @@
     });
 
     // 视差与激活逻辑
+    // 性能优化：把每张卡片里的 .parallax 元素及其速度预先缓存，避免滚动时反复 querySelector/getAttribute
+    const parallaxMetaByCard = cards.map(card=>{
+      const els = Array.from(card.querySelectorAll(".parallax"));
+      return els.map(el=>{
+        const speed = parseFloat(el.getAttribute("data-parallax") || "0.2");
+        return { el, speed };
+      });
+    });
     function updateTransforms(){
       const cw = getCardWidth();
       const sl = scroller.scrollLeft;
@@ -1740,8 +1792,7 @@
         card.style.transform = `translate3d(${translateX}px, ${translateY}px, 0) scale(${scale})`;
         card.style.opacity = String(opacity);
 
-        $$(".parallax", card).forEach(el=>{
-          const speed = parseFloat(el.getAttribute("data-parallax") || "0.2");
+        parallaxMetaByCard[i].forEach(({el, speed})=>{
           const px = -dist * 34 * speed;
           const py = dist * 10 * speed;
           el.style.transform = `translate3d(${px}px, ${py}px, 0)`;
@@ -1896,9 +1947,10 @@
     const SP_TILE_GAP = 16; // card vertical spacing
 
     function makeDeck(){
-      // Windows 最简单：1-suit（总牌数 104 = 8 组 × 13，全部同花色）
-      const suits = ["♠"];
-      const deckCountPerSuit = 8; // 1 suit * 8 * 13 = 104
+      // 更贴近 Windows：2-suit 玩法（移动序列必须“同花色+连续递减”，完成消除也要求同花色）
+      // 总牌数保持为 104 张（8 组 × 13）
+      const suits = ["♠", "♥"];
+      const deckCountPerSuit = 4; // 2 suits * 4 * 13 = 104
       const deck = [];
       for(let si=0; si<suits.length; si++){
         const suit = suits[si];
@@ -1983,8 +2035,8 @@
           tile.className = "spider-tile" + (c.faceUp ? "" : " faceDown");
           tile.dataset.col = String(colIdx);
           tile.dataset.idx = String(j);
-          // 视觉要求：自上到下堆叠
-          tile.style.top = (j*SP_TILE_GAP) + "px";
+          // 用 bottom 布局，让数组 index 0 对应“底部”，与正常蜘蛛纸牌一致
+          tile.style.bottom = (j*SP_TILE_GAP) + "px";
 
           if(c.faceUp){
             const rankText =
@@ -2076,7 +2128,6 @@
       spiderWinModal?.setAttribute("hidden", "hidden");
       spiderSelected = null;
       spiderHistory = [];
-      clearSpiderGhost();
       if(spiderPass) spiderPass.textContent = "";
       if(spiderCopyBtn){
         spiderCopyBtn.disabled = true;
@@ -2226,7 +2277,6 @@
         // 恢复
         spiderState = cloneSpidersState(prev);
         spiderSelected = null;
-        clearSpiderGhost();
         if(spiderPass) spiderPass.textContent = "";
         if(spiderCopyBtn){
           spiderCopyBtn.disabled = true;
@@ -2245,18 +2295,6 @@
     let spiderDragStartY = 0;
     let spiderIgnoreClickUntil = 0;
     const DRAG_THRESHOLD_PX = 8;
-    let spiderGhost = null;
-    let spiderGhostOffsetX = 0;
-    let spiderGhostOffsetY = 0;
-
-    function clearSpiderGhost(){
-      if(spiderGhost){
-        spiderGhost.remove();
-        spiderGhost = null;
-      }
-      // 还原被拖拽的原牌透明度
-      $$(".spider-tile.dragging").forEach(el=> el.classList.remove("dragging"));
-    }
 
     if(spiderBoard){
       spiderBoard.style.touchAction = "none";
@@ -2284,39 +2322,6 @@
         spiderDragStartY = e.clientY;
         spiderIgnoreClickUntil = 0;
 
-        // 创建跟手的“拿起牌堆”动画层
-        clearSpiderGhost();
-        spiderGhost = document.createElement("div");
-        spiderGhost.className = "spider-ghost";
-        document.body.appendChild(spiderGhost);
-
-        const selectedEls = $$(`.spider-tile[data-col="${colIdx}"]`).filter(el=>{
-          const j = parseInt(el.dataset.idx, 10);
-          return !Number.isNaN(j) && j >= idx;
-        });
-        // 让原位置的牌变淡
-        selectedEls.forEach(el=> el.classList.add("dragging"));
-
-        // 复制节点到 ghost（保持同样的叠放间距）
-        selectedEls.forEach(el=>{
-          const clone = el.cloneNode(true);
-          clone.classList.remove("selected");
-          clone.classList.remove("validDrop");
-          clone.classList.remove("dragging");
-          clone.style.top = (parseInt(el.dataset.idx,10) - idx) * SP_TILE_GAP + "px";
-          clone.style.left = "0px";
-          clone.style.position = "absolute";
-          spiderGhost.appendChild(clone);
-        });
-
-        // 计算拖拽偏移，让手指落在“抓取点”附近
-        const rect = tile.getBoundingClientRect();
-        spiderGhostOffsetX = e.clientX - rect.left;
-        spiderGhostOffsetY = e.clientY - rect.top;
-        spiderGhost.style.width = rect.width + "px";
-        spiderGhost.style.height = (selectedEls.length-1)*SP_TILE_GAP + rect.height + "px";
-        spiderGhost.style.transform = `translate3d(${e.clientX - spiderGhostOffsetX}px, ${e.clientY - spiderGhostOffsetY}px, 0)`;
-
         // 防止在拖拽时触发 click 逻辑
         e.preventDefault();
         e.stopPropagation();
@@ -2331,10 +2336,6 @@
         if(!spiderDragMoved && (Math.abs(dx) >= DRAG_THRESHOLD_PX || Math.abs(dy) >= DRAG_THRESHOLD_PX)){
           spiderDragMoved = true;
         }
-        if(spiderGhost){
-          spiderGhost.style.transition = "transform 0ms";
-          spiderGhost.style.transform = `translate3d(${e.clientX - spiderGhostOffsetX}px, ${e.clientY - spiderGhostOffsetY}px, 0)`;
-        }
       }, { passive:true });
 
       document.addEventListener("pointerup", (e)=>{
@@ -2347,55 +2348,13 @@
         spiderDragMoved = false;
         spiderIgnoreClickUntil = Date.now() + 260; // 给 click 一个短暂兜底间隔
 
-        if(!wasMoved){
-          // 只是点击选中，不做落点
-          clearSpiderGhost();
-          return;
-        }
+        if(!wasMoved) return; // 只是点击选中，不做落点
         const el = document.elementFromPoint(e.clientX, e.clientY);
         const colEl = el?.closest?.(".spider-col");
-        if(!colEl){
-          clearSpiderGhost();
-          return;
-        }
+        if(!colEl) return;
         const destColIdx = parseInt(colEl.dataset.col, 10);
-        if(Number.isNaN(destColIdx)){
-          clearSpiderGhost();
-          return;
-        }
-
-        // 先尝试是否可落子（不可落则回弹）
-        const fromCol = spiderSelected?.fromCol;
-        const startIdx = spiderSelected?.startIdx;
-        const canDrop = (() => {
-          if(fromCol == null || startIdx == null) return false;
-          if(fromCol === destColIdx) return false;
-          const src = spiderState.cols[fromCol];
-          const dest = spiderState.cols[destColIdx];
-          const seq = src.slice(startIdx);
-          if(seq.length === 0) return false;
-          return canDropSequence(seq[0], dest);
-        })();
-
-        if(!spiderGhost){
-          attemptDrop(destColIdx);
-          return;
-        }
-
-        // 计算目标位置：落到目标列当前最后一张下面
-        const boardRect = spiderBoard.getBoundingClientRect();
-        const colRect = colEl.getBoundingClientRect();
-        const destLen = spiderState.cols[destColIdx].length;
-        const targetX = colRect.left;
-        const targetY = colRect.top + destLen * SP_TILE_GAP;
-        spiderGhost.style.transition = "transform 220ms var(--easeSoft)";
-        spiderGhost.style.transform = `translate3d(${targetX}px, ${targetY}px, 0)`;
-
-        window.setTimeout(()=>{
-          clearSpiderGhost();
-          if(canDrop) attemptDrop(destColIdx);
-          else renderSpider(); // 还原高亮
-        }, 230);
+        if(Number.isNaN(destColIdx)) return;
+        attemptDrop(destColIdx);
       });
     }
 
@@ -2437,49 +2396,6 @@
     if(spiderBoard){
       setSpiderNewGame();
     }
-
-    // ============== 音乐播放器（全局单例） ==============
-    const audio = $("#bgmAudio");
-    const musicBtn = $("#musicBtn");
-    const volRange = $("#volRange");
-    const musicHint = $("#musicHint");
-    const musicIcon = $("#musicIcon");
-
-    let isPlaying = false;
-    function setPlayUI(){
-      if(isPlaying){
-        musicIcon.innerHTML = `<path d="M8 5v14"></path><path d="M16 5v14"></path>`;
-        musicHint.textContent = "正在播放（滑动切换章节不影响）";
-      }else{
-        musicIcon.innerHTML = `<path d="M8 5v14l11-7z"></path>`;
-        musicHint.textContent = "点击播放（audio/bgm.mp3 可替换）";
-      }
-    }
-
-    volRange.addEventListener("input", ()=>{
-      audio.volume = clamp(parseFloat(volRange.value), 0, 1);
-    });
-    audio.volume = clamp(parseFloat(volRange.value), 0, 1);
-
-    musicBtn.addEventListener("click", async ()=>{
-      try{
-        if(!isPlaying){
-          await audio.play();
-          isPlaying = true;
-        }else{
-          audio.pause();
-          isPlaying = false;
-        }
-        setPlayUI();
-      }catch{
-        isPlaying = false;
-        setPlayUI();
-        musicHint.textContent = "播放被限制：请再点击一次（浏览器策略）";
-      }
-    });
-    audio.addEventListener("play", ()=>{ isPlaying = true; setPlayUI(); });
-    audio.addEventListener("pause", ()=>{ isPlaying = false; setPlayUI(); });
-    setPlayUI();
 
     // loading 结束
     window.addEventListener("load", ()=>{
@@ -2642,7 +2558,19 @@
     }
 
     function isOnBday(){
-      return currentIndex === 5;
+      const card = cards[currentIndex];
+      return card?.classList?.contains("bday");
+    }
+
+    // 结尾页跳转按钮
+    const endJumpBtn = $("#endJumpBtn");
+    if(endJumpBtn){
+      endJumpBtn.addEventListener("click", ()=>{
+        const target = $(".card.user-say");
+        if(!target) return;
+        const idx = cards.indexOf(target);
+        if(idx >= 0) scrollToIndex(idx, true);
+      });
     }
 
     if(giftBtn){
