@@ -642,7 +642,10 @@
       background: rgba(255,255,255,.62);
       border:1px solid rgba(42,108,255,.16);
       backdrop-filter: blur(12px);
-      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
     }
     .controller-icon{
       width:44px; height:44px;
@@ -653,8 +656,8 @@
       backdrop-filter: blur(10px);
     }
     .controller-icon svg{ width:22px; height:22px; }
-    .game-badge .title{ font-weight:900; letter-spacing:.2px; margin-bottom:6px; }
-    .game-badge .sub{ color:var(--muted); font-size:12px; line-height:1.4; }
+    .game-badge .title{ font-weight:900; letter-spacing:.2px; margin-bottom:6px; line-height:1.3; word-wrap: break-word; }
+    .game-badge .sub{ color:var(--muted); font-size:12px; line-height:1.4; word-wrap: break-word; }
     .meter{
       flex:1;
       height:10px;
@@ -687,76 +690,13 @@
       font-size:13px;
     }
 
-    /* 页面 4：挚爱博物馆 */
-    .museum .museum-title{ font-family:"Playfair Display",serif; font-size: clamp(22px, 6vw, 30px); margin:0; line-height:1.1; }
-    .museum .museum-sub{ color:var(--muted); font-size:13px; line-height:1.5; margin-top:8px; }
-    .museum .museum-top{ margin-top:4px; display:flex; align-items:flex-end; justify-content:space-between; gap:12px; }
-    .note-bounce{
-      width:28px; height:28px;
-      border-radius:12px;
-      background: rgba(255,255,255,.72);
-      border:1px solid rgba(42,108,255,.16);
-      backdrop-filter: blur(12px);
-      display:flex; align-items:center; justify-content:center;
-      color: rgba(11,59,91,.88);
-      box-shadow: 0 20px 60px rgba(10,60,120,.12);
-      overflow:hidden;
+    /* 通用文本优化 */
+    * {
+      word-wrap: break-word;
+      overflow-wrap: break-word;
     }
-    .card.activated .note-bounce{ animation: noteHop 1.2s var(--easeSoft) infinite; }
-    @keyframes noteHop{ 0%,100%{ transform: translate3d(0,0,0); } 50%{ transform: translate3d(0,-6px,0); } }
-
-    .album-grid{
-      margin-top:10px;
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:14px;
-    }
-    .album{
-      padding:14px 12px;
-      border-radius:18px;
-      background: rgba(255,255,255,.62);
-      border:1px solid rgba(42,108,255,.16);
-      backdrop-filter: blur(12px);
-      box-shadow: 0 20px 60px rgba(10,60,120,.10);
-      position:relative;
-      overflow:hidden;
-      transition: transform 500ms var(--easeOut);
-    }
-    .album:hover{ transform: translate3d(0,-4px,0); }
-    .album .cover{
-      width:100%;
-      aspect-ratio: 1/1;
-      border-radius:999px;
-      display:flex; align-items:center; justify-content:center;
-      margin:2px auto 10px;
-      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.70), rgba(255,255,255,.25));
-      border:1px solid rgba(42,108,255,.16);
-      box-shadow: 0 28px 80px rgba(42,108,255,.14), inset 0 0 0 1px rgba(42,108,255,.10);
-      overflow:hidden;
-      position:relative;
-    }
-    .album .cover img{
-      width:100%; height:100%;
-      object-fit:cover;
-      border-radius:999px;
-      filter: saturate(1.05) contrast(1.02);
-      transform: scale(1.03);
-    }
-    .album .placeholder{
-      position:absolute; inset:0;
-      display:flex; flex-direction:column; align-items:center; justify-content:center;
-      gap:6px;
-      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.02));
-      color: rgba(11,59,91,.62);
-      text-align:center;
-      font-size:12px;
-    }
-    .album .placeholder .ico{ font-size:22px; filter: drop-shadow(0 18px 45px rgba(42,108,255,.20)); }
-    .album .name{ font-weight:900; letter-spacing:.2px; }
-    .album .desc{ margin-top:6px; color:var(--muted); font-size:12px; line-height:1.45; }
-    .museum .footer-note{ margin-top:auto; padding:14px 14px; border-radius:18px; background: rgba(255,255,255,.62); border:1px solid rgba(42,108,255,.16); backdrop-filter: blur(12px); color:var(--muted); font-size:13px; line-height:1.6; }
-
-    /* 页面 5：聊天记录精选 */
+    
+    /* 页面 4：聊天记录精选 */
     .chat .title{ font-family:"Playfair Display",serif; font-size: clamp(22px, 6vw, 30px); margin:0; line-height:1.1; }
     .chat .tiny{ color:var(--muted); font-size:12px; line-height:1.4; text-align:right; padding-bottom:2px; }
     .chat .title-row{ display:flex; align-items:flex-end; justify-content:space-between; gap:10px; margin-top:4px; }
@@ -788,7 +728,7 @@
     }
     .bubble{
       max-width:76%;
-      padding:12px 12px;
+      padding:14px 16px;
       border-radius:18px;
       border:1px solid rgba(42,108,255,.16);
       backdrop-filter: blur(12px);
@@ -799,6 +739,9 @@
       box-shadow: 0 20px 60px rgba(10,60,120,.10);
       position:relative;
       overflow:hidden;
+      word-wrap: break-word;
+      hyphens: auto;
+      min-width: 120px;
     }
     .msg.me .bubble{
       background: linear-gradient(180deg, rgba(42,165,255,.20), rgba(255,255,255,.62));
@@ -812,8 +755,8 @@
       letter-spacing:.1px;
     }
     .voice{ display:flex; align-items:center; gap:10px; padding:12px 12px; }
-    .voice .label{ font-weight:900; letter-spacing:.2px; font-size:12px; margin-right:4px; }
-    .wavebars{ flex:1; height:22px; display:flex; align-items:flex-end; gap:4px; }
+    .voice .label{ font-weight:900; letter-spacing:.2px; font-size:12px; margin-right:4px; line-height:1.3; word-wrap: break-word; flex: 1; max-width: 70%; }
+    .wavebars{ width:80px; height:22px; display:flex; align-items:flex-end; gap:4px; flex-shrink: 0; }
     .wavebars span{
       width:5px; border-radius:999px;
       background: linear-gradient(180deg, rgba(255,255,255,.85), rgba(186,224,255,.55));
@@ -849,7 +792,7 @@
       width:28px; height:28px;
     }
 
-    /* 页面 6：生日祝福 */
+    /* 页面 5：生日祝福 */
     #confettiCanvas{
       position:fixed; inset:0;
       pointer-events:none;
@@ -978,7 +921,7 @@
       100%{ opacity:0; transform: translate3d(40px, -180px,0) scale(1.15) rotate(18deg); }
     }
 
-    /* 蜘蛛纸牌（轻量简化版）*/
+    /* 页面 6：生日庆祝（蜘蛛纸牌）*/
     .spider-wrap{
       display:flex;
       flex-direction:column;
@@ -1102,175 +1045,566 @@
       line-height:1.6;
     }
 
-    /* 页面 8：结尾寄语 & 页面 9：你想对我说 */
-    .end-page .end-message{
-      margin-top:4px;
-      padding:18px 16px;
-      border-radius:22px;
-      background: rgba(255,255,255,.70);
-      border:1px solid rgba(42,108,255,.16);
-      backdrop-filter: blur(12px);
-      box-shadow: 0 18px 55px rgba(10,60,120,.10);
+    /* 页面 7：结尾寄语（重新设计） - 精美增强版 */
+    .end-page{
+      display:flex;
+      flex-direction:column;
       position:relative;
       overflow:hidden;
+    }
+    .end-page .content{
+      display:flex;
+      flex-direction:column;
+      flex:1;
+      position:relative;
+      z-index:3;
+    }
+    .end-page .ocean-waves{
+      position:absolute;
+      inset:-30%;
+      background:
+        radial-gradient(circle at 15% 25%, rgba(86,166,255,.12) 0%, transparent 50%),
+        radial-gradient(circle at 85% 75%, rgba(122,92,255,.10) 0%, transparent 45%),
+        radial-gradient(circle at 45% 95%, rgba(38,215,255,.08) 0%, transparent 40%),
+        radial-gradient(circle at 75% 15%, rgba(255,255,255,.06) 0%, transparent 35%),
+        radial-gradient(circle at 25% 85%, rgba(186,224,255,.07) 0%, transparent 42%);
+      animation: oceanFloat 15s ease-in-out infinite;
+      pointer-events:none;
+      z-index:0;
+    }
+    .end-page .star-particles{
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      z-index:1;
+    }
+    .end-page .star{
+      position:absolute;
+      width:2px;
+      height:2px;
+      background: rgba(255,255,255,.8);
+      border-radius:50%;
+      animation: twinkle 3s ease-in-out infinite;
+      box-shadow: 0 0 6px rgba(255,255,255,.6);
+    }
+    @keyframes twinkle{
+      0%,100%{ opacity:0.2; transform: scale(1); }
+      50%{ opacity:1; transform: scale(1.2); }
+    }
+    @keyframes oceanFloat{
+      0%,100%{ transform: translate3d(0,0,0) rotate(0deg) scale(1); }
+      25%{ transform: translate3d(-12px, -18px, 0) rotate(1.5deg) scale(1.02); }
+      50%{ transform: translate3d(8px, -12px, 0) rotate(-1deg) scale(1.01); }
+      75%{ transform: translate3d(-6px, 8px, 0) rotate(0.5deg) scale(1.015); }
+    }
+    .end-page .aurora-borealis{
+      position:absolute;
+      top:-20%;
+      left:-10%;
+      right:-10%;
+      height:40%;
+      background: linear-gradient(135deg, 
+        rgba(86,166,255,.08) 0%, 
+        rgba(122,92,255,.06) 25%, 
+        rgba(38,215,255,.04) 50%, 
+        rgba(255,255,255,.03) 75%, 
+        rgba(186,224,255,.05) 100%);
+      filter: blur(40px);
+      animation: aurora 20s ease-in-out infinite;
+      pointer-events:none;
+      z-index:1;
+    }
+    @keyframes aurora{
+      0%,100%{ transform: translateX(-10%) translateY(5%) rotate(0deg); opacity:0.6; }
+      33%{ transform: translateX(5%) translateY(-3%) rotate(2deg); opacity:0.8; }
+      66%{ transform: translateX(-5%) translateY(3%) rotate(-1deg); opacity:0.7; }
+    }
+    .end-page .end-header{
+      position:relative;
+      z-index:4;
+      text-align:center;
+      margin-bottom:24px;
+      animation: headerFloat 8s ease-in-out infinite;
+    }
+    @keyframes headerFloat{
+      0%,100%{ transform: translateY(0); }
+      50%{ transform: translateY(-5px); }
+    }
+    .end-page .end-title{
+      font-family:"Playfair Display",serif;
+      font-size: clamp(36px, 9vw, 52px);
+      margin:0;
+      background: linear-gradient(135deg, 
+        rgba(255,255,255,.98) 0%, 
+        rgba(186,224,255,.95) 30%, 
+        rgba(86,166,255,.92) 60%, 
+        rgba(255,255,255,.90) 100%);
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+      text-shadow: 
+        0 0 30px rgba(86,166,255,.3),
+        0 0 60px rgba(122,92,255,.2),
+        0 0 90px rgba(38,215,255,.1);
+      letter-spacing:.4px;
+      line-height:1.1;
+      animation: titleGlow 6s ease-in-out infinite;
+      position:relative;
+    }
+    .end-page .end-title::before{
+      content:"";
+      position:absolute;
+      inset:-10px;
+      background: linear-gradient(45deg, 
+        transparent 30%, 
+        rgba(86,166,255,.1) 50%, 
+        transparent 70%);
+      animation: titleShine 8s linear infinite;
+      z-index:-1;
+    }
+    @keyframes titleShine{
+      0%{ transform: translateX(-100%) translateY(-100%); }
+      100%{ transform: translateX(100%) translateY(100%); }
+    }
+    @keyframes titleGlow{
+      0%,100%{ 
+        filter: brightness(1) drop-shadow(0 0 20px rgba(86,166,255,.4));
+        transform: scale(1);
+      }
+      25%{ 
+        filter: brightness(1.1) drop-shadow(0 0 30px rgba(122,92,255,.5));
+        transform: scale(1.02);
+      }
+      50%{ 
+        filter: brightness(1.2) drop-shadow(0 0 40px rgba(38,215,255,.6));
+        transform: scale(1.03);
+      }
+      75%{ 
+        filter: brightness(1.1) drop-shadow(0 0 25px rgba(186,224,255,.5));
+        transform: scale(1.01);
+      }
+    }
+    .end-page .end-subtitle{
+      margin-top:12px;
+      color:rgba(255,255,255,.85);
+      font-size:15px;
+      letter-spacing:.6px;
+      opacity:.9;
+      text-shadow: 0 2px 10px rgba(86,166,255,.3);
+      animation: subtitlePulse 4s ease-in-out infinite;
+    }
+    @keyframes subtitlePulse{
+      0%,100%{ opacity:0.8; transform: scale(1); }
+      50%{ opacity:1; transform: scale(1.05); }
+    }
+    .end-page .message-container{
+      position:relative;
+      z-index:4;
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      gap:20px;
+    }
+    .end-page .end-message{
+      padding:28px 24px;
+      border-radius:28px;
+      background: 
+        linear-gradient(135deg, rgba(255,255,255,.8) 0%, rgba(255,255,255,.65) 100%),
+        radial-gradient(circle at 30% 20%, rgba(86,166,255,.12) 0%, transparent 50%);
+      border: 2px solid rgba(42,108,255,.2);
+      backdrop-filter: blur(20px);
+      box-shadow: 
+        0 32px 90px rgba(10,60,120,.15),
+        0 16px 45px rgba(42,108,255,.1),
+        inset 0 0 0 1px rgba(255,255,255,.3),
+        inset 0 1px 0 rgba(255,255,255,.4);
+      position:relative;
+      overflow:hidden;
+      transition: all 600ms var(--easeSoft);
+      animation: messageCardFloat 12s ease-in-out infinite;
+    }
+    @keyframes messageCardFloat{
+      0%,100%{ transform: translateY(0) rotate(0deg); }
+      33%{ transform: translateY(-3px) rotate(0.5deg); }
+      66%{ transform: translateY(2px) rotate(-0.3deg); }
+    }
+    .end-page .end-message:hover{
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 
+        0 40px 110px rgba(10,60,120,.2),
+        0 20px 60px rgba(42,108,255,0.15),
+        inset 0 0 0 2px rgba(255,255,255,0.4),
+        inset 0 2px 0 rgba(255,255,255,0.5);
     }
     .end-page .end-message::before{
       content:"";
       position:absolute;
-      inset:-60% -30% auto auto;
-      width:260px;
-      height:260px;
-      border-radius:999px;
-      background: radial-gradient(circle at 30% 30%, rgba(59,188,255,.20), transparent 56%);
-      transform: rotate(-10deg);
-      opacity:.95;
+      inset:-40%;
+      background: 
+        radial-gradient(circle at 20% 20%, rgba(86,166,255,.2) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(122,92,255,.18) 0%, transparent 45%),
+        radial-gradient(circle at 60% 40%, rgba(38,215,255,.15) 0%, transparent 40%);
+      transform: rotate(-12deg) scale(1.1);
+      opacity:.8;
+      animation: messageFloat 10s ease-in-out infinite;
+      filter: blur(1px);
+    }
+    @keyframes messageFloat{
+      0%,100%{ transform: rotate(-12deg) scale(1.1) translate(0, 0); }
+      25%{ transform: rotate(-8deg) scale(1.15) translate(5px, -3px); }
+      50%{ transform: rotate(-10deg) scale(1.12) translate(-3px, 2px); }
+      75%{ transform: rotate(-9deg) scale(1.08) translate(2px, -2px); }
+    }
+    .end-page .end-message::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: 
+        linear-gradient(45deg, transparent 30%, rgba(255,255,255,.1) 50%, transparent 70%),
+        linear-gradient(-45deg, transparent 40%, rgba(86,166,255,.05) 60%, transparent 80%);
+      animation: messageShimmer 15s linear infinite;
+      pointer-events:none;
+    }
+    @keyframes messageShimmer{
+      0%{ transform: translateX(-100%) translateY(-100%); }
+      100%{ transform: translateX(100%) translateY(100%); }
     }
     .end-page .end-message .end-text{
       position:relative;
-      z-index:2;
+      z-index:3;
       font-family:"Playfair Display",serif;
-      font-size: clamp(18px, 5.4vw, 26px);
-      line-height:1.45;
-      letter-spacing:.2px;
-      color: rgba(11,59,91,.92);
+      font-size:19px;
+      font-weight:500;
+      line-height:1.7;
+      letter-spacing:.4px;
+      color: rgba(11,59,91,.94);
+      text-align:center;
+      text-shadow: 0 1px 3px rgba(255,255,255/.5);
     }
-    .end-jump-btn{
+    .end-page .user-message-section{
+      padding:24px 20px;
+      border-radius:26px;
+      background: 
+        linear-gradient(135deg, rgba(255,255,255,.75) 0%, rgba(255,255,255,.55) 100%),
+        radial-gradient(circle at 70% 30%, rgba(38,215,255,.12) 0%, transparent 50%);
+      border: 2px solid rgba(42,108,255,.18);
+      backdrop-filter: blur(18px);
+      box-shadow: 
+        0 24px 70px rgba(10,60,120,.12),
+        0 12px 35px rgba(42,108,255,.08),
+        inset 0 0 0 1px rgba(255,255,255/.25);
+      position:relative;
+      overflow:hidden;
+      transition: all 500ms var(--easeSoft);
+      animation: userCardFloat 14s ease-in-out infinite;
+    }
+    @keyframes userCardFloat{
+      0%,100%{ transform: translateY(0) scale(1); }
+      33%{ transform: translateY(-2px) scale(1.01); }
+      66%{ transform: translateY(1px) scale(1.005); }
+    }
+    .end-page .user-message-section:hover{
+      transform: translateY(-2px) scale(1.01);
+      box-shadow: 
+        0 28px 80px rgba(10,60,120,.15),
+        0 14px 40px rgba(42,108,255/.1),
+        inset 0 0 0 2px rgba(255,255,255/.3);
+    }
+    .end-page .user-message-section::before{
+      content:"";
       position:absolute;
-      right:16px;
-      bottom: calc(16px + var(--safe-bottom));
-      z-index:5;
-      width: min(260px, 88vw);
-      padding:12px 14px;
-      border-radius:999px;
-      border:1px solid rgba(42,108,255,.18);
-      background: linear-gradient(180deg, rgba(59,188,255,.22), rgba(255,255,255,.70));
-      backdrop-filter: blur(12px);
-      box-shadow: 0 22px 70px rgba(10,60,120,.14);
-      color: rgba(11,59,91,.96);
-      font-weight:900;
-      letter-spacing:.2px;
+      inset:-35%;
+      background: 
+        radial-gradient(circle at 75% 25%, rgba(38,215,255,.15) 0%, transparent 50%),
+        radial-gradient(circle at 25% 75%, rgba(122,92,255,.12) 0%, transparent 45%),
+        radial-gradient(circle at 50% 50%, rgba(86,166,255,.08) 0%, transparent 40%);
+      transform: rotate(8deg) scale(1.2);
+      opacity:.7;
+      animation: userFloat 18s ease-in-out infinite reverse;
+      filter: blur(1.5px);
+    }
+    @keyframes userFloat{
+      0%,100%{ transform: scale(1.2) rotate(8deg) translate(0, 0); }
+      33%{ transform: scale(1.25) rotate(10deg) translate(-4px, 3px); }
+      66%{ transform: scale(1.22) rotate(6deg) translate(3px, -2px); }
+    }
+    .end-page .user-message-section::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: 
+        linear-gradient(60deg, transparent 40%, rgba(255,255,255,.08) 60%, transparent 80%),
+        linear-gradient(-60deg, transparent 30%, rgba(38,215,255,.04) 50%, transparent 70%);
+      animation: userShimmer 12s linear infinite;
+      pointer-events:none;
+    }
+    @keyframes userShimmer{
+      0%{ transform: translateX(-100%) translateY(-100%); }
+      100%{ transform: translateX(100%) translateY(100%); }
+    }
+    .end-page .user-message-label{
+      font-size:14px;
+      color:rgba(11,59,91,.85);
+      letter-spacing:.3px;
+      margin-bottom:16px;
+      text-align:center;
+      position:relative;
+      z-index:3;
+      font-weight:600;
+      text-shadow: 0 1px 3px rgba(255,255,255/.5);
+      animation: labelGlow 5s ease-in-out infinite;
+    }
+    @keyframes labelGlow{
+      0%,100%{ opacity:0.8; text-shadow: 0 1px 3px rgba(255,255,255/.5); }
+      50%{ opacity:1; text-shadow: 0 1px 6px rgba(86,166,255,.6); }
+    }
+    .end-page .user-message-content{
+      position:relative;
+      z-index:3;
+      min-height:120px;
+      padding:20px 18px;
+      border-radius:22px;
+      background: 
+        linear-gradient(135deg, rgba(255,255,255,.85) 0%, rgba(255,255,255,.75) 100%),
+        radial-gradient(circle at 50% 50%, rgba(86,166,255,.05) 0%, transparent 50%);
+      border: 2px dashed rgba(42,108,255,.3);
+      color:rgba(11,59,91,.92);
+      font-size:15px;
+      line-height:1.7;
+      text-align:center;
+      font-style:italic;
+      font-weight:500;
+      opacity:0;
+      transform: translateY(15px) scale(0.95);
+      transition: all 800ms var(--easeSoft);
+      box-shadow: 
+        inset 0 0 20px rgba(86,166,255,.08),
+        0 8px 25px rgba(10,60,120,.1);
+      text-shadow: 0 1px 3px rgba(255,255,255/.6);
+    }
+    .end-page .user-message-content.show{
+      opacity:1;
+      transform: translateY(0) scale(1);
+      animation: contentReveal 1s var(--easeOut) forwards;
+    }
+    @keyframes contentReveal{
+      0%{ opacity:0; transform: translateY(15px) scale(0.95); }
+      50%{ opacity:0.8; transform: translateY(-2px) scale(1.02); }
+      100%{ opacity:1; transform: translateY(0) scale(1); }
+    }
+    .end-page .reveal-message-btn{
+      position:relative;
+      z-index:4;
+      margin:0 auto;
+      padding:18px 28px;
+      border-radius:50px;
+      background: 
+        linear-gradient(135deg, rgba(86,166,255,.85) 0%, rgba(122,92,255,.82) 50%, rgba(38,215,255,.78) 100%),
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.2) 0%, transparent 50%);
+      border: 2px solid rgba(255,255,255,.4);
+      color:white;
+      font-size:15px;
+      font-weight:700;
+      letter-spacing:.3px;
       cursor:pointer;
+      backdrop-filter: blur(16px);
+      box-shadow: 
+        0 20px 60px rgba(42,108,255/.3),
+        0 10px 30px rgba(122,92,255/.25),
+        inset 0 0 0 1px rgba(255,255,255/.3),
+        inset 0 1px 0 rgba(255,255,255/.5);
+      transition: all 500ms var(--easeOut);
       -webkit-tap-highlight-color: transparent;
       user-select:none;
+      overflow:hidden;
+      animation: btnFloat 8s ease-in-out infinite;
+      text-shadow: 0 2px 8px rgba(0,0,0,.2);
     }
-    .end-jump-btn:active{ transform: scale(.99); }
-
-    .user-say .user-say-card{
-      margin-top:6px;
-      padding:18px 16px;
-      border-radius:22px;
-      background: rgba(255,255,255,.70);
-      border:1px solid rgba(42,108,255,.16);
-      backdrop-filter: blur(12px);
-      box-shadow: 0 18px 55px rgba(10,60,120,.10);
+    @keyframes btnFloat{
+      0%,100%{ transform: translateY(0) scale(1); }
+      50%{ transform: translateY(-3px) scale(1.02); }
     }
-    .user-say .user-say-placeholder{
-      min-height: 120px;
-      border-radius:18px;
-      border: 1px dashed rgba(42,108,255,.22);
-      background: rgba(255,255,255,.40);
+    .end-page .reveal-message-btn::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: 
+        linear-gradient(135deg, rgba(255,255,255,.3) 0%, transparent 50%, rgba(255,255,255/.1) 100%),
+        radial-gradient(circle at 70% 70%, rgba(255,255,255,.15) 0%, transparent 50%);
+      opacity:0;
+      transition: opacity 500ms var(--easeOut);
+      animation: btnShine 6s linear infinite;
     }
-
-    @media (prefers-reduced-motion: reduce){
-      .reveal, .card.activated .reveal,
-      .card.activated .wave .bar,
-      .card.activated .locations .route::after,
-      .card.activated .meter::after,
-      .card.activated .voice .wavebars span,
-      .card.activated .note-bounce,
-      .heart-floats .hf{
-        animation:none !important;
-        transition:none !important;
-      }
-      .scroller{ scroll-behavior:auto; }
+    @keyframes btnShine{
+      0%{ transform: translateX(-100%) translateY(-100%); }
+      100%{ transform: translateX(100%) translateY(100%); }
+    }
+    .end-page .reveal-message-btn:hover{
+      transform: translateY(-4px) scale(1.05);
+      box-shadow: 
+        0 25px 75px rgba(42,108,255/.4),
+        0 12px 35px rgba(122,92,255/.3),
+        inset 0 0 0 2px rgba(255,255,255/.4),
+        inset 0 2px 0 rgba(255,255,255/.6);
+    }
+    .end-page .reveal-message-btn:hover::before{
+      opacity:1;
+    }
+    .end-page .reveal-message-btn:active{
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 
+        0 18px 50px rgba(42,108,255/.35),
+        0 8px 25px rgba(122,92,255/.25),
+        inset 0 0 0 2px rgba(255,255,255/.4);
+    }
+    .end-page .reveal-message-btn .btn-text{
+      position:relative;
+      z-index:2;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      transition: all 300ms var(--easeOut);
+    }
+    .end-page .reveal-message-btn:hover .btn-text{
+      transform: scale(1.05);
+    }
+    .end-page .reveal-message-btn .btn-icon{
+      font-size:18px;
+      animation: iconPulse 3s ease-in-out infinite;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,.2));
+    }
+    @keyframes iconPulse{
+      0%,100%{ transform: scale(1) rotate(0deg); }
+      25%{ transform: scale(1.1) rotate(-5deg); }
+      50%{ transform: scale(1.2) rotate(0deg); }
+      75%{ transform: scale(1.1) rotate(5deg); }
+    }
+    /* 增强动画效果 */
+    .end-page.activated .ocean-waves{
+      animation: oceanFloat 15s ease-in-out infinite, oceanPulse 8s ease-in-out infinite;
+    }
+    @keyframes oceanPulse{
+      0%,100%{ opacity:0.8; }
+      50%{ opacity:1; }
+    }
+    .end-page.activated .aurora-borealis{
+      animation: aurora 20s ease-in-out infinite, auroraPulse 12s ease-in-out infinite;
+    }
+    @keyframes auroraPulse{
+      0%,100%{ opacity:0.6; }
+      50%{ opacity:0.9; }
+    }
+    .end-page.activated .star{
+      animation: twinkle 3s ease-in-out infinite, starMove 20s linear infinite;
+    }
+    @keyframes starMove{
+      0%{ transform: translateX(0) translateY(0); }
+      100%{ transform: translateX(-50px) translateY(-30px); }
+    }
+    /* 增强动画效果 */
+    .end-page.activated .ocean-waves{
+      animation: oceanFloat 15s ease-in-out infinite, oceanPulse 8s ease-in-out infinite;
+    }
+    @keyframes oceanPulse{
+      0%,100%{ opacity:0.8; }
+      50%{ opacity:1; }
+    }
+    .end-page.activated .aurora-borealis{
+      animation: aurora 20s ease-in-out infinite, auroraPulse 12s ease-in-out infinite;
+    }
+    @keyframes auroraPulse{
+      0%,100%{ opacity:0.6; }
+      50%{ opacity:0.9; }
+    }
+    .end-page.activated .star{
+      animation: twinkle 3s ease-in-out infinite, starMove 20s linear infinite;
+    }
+    @keyframes starMove{
+      0%{ transform: translateX(0) translateY(0); }
+      100%{ transform: translateX(-50px) translateY(-30px); }
     }
   </style>
 </head>
-
 <body>
   <div class="loading-screen" id="loading">
     <div class="loading-inner">
-      <div class="loading-title">正在生成你的年度报告…</div>
-      <div class="loading-sub">把喜欢收进时间里，然后把心交给你。</div>
-      <div class="loading-bar" aria-hidden="true"></div>
+      <div class="loading-title">✨ 回忆 ✨</div>
+      <div class="loading-sub">正在为你加载来自小愣的回忆...</div>
+      <div class="loading-bar"></div>
     </div>
   </div>
 
+  <!-- 页面导航 -->
+  <div class="pager">
+    <div class="dots" id="dots"></div>
+    <div class="pageCount" id="pageCount">1/7</div>
+  </div>
+
+  <!-- 左右导航按钮 -->
+  <button class="nav-btn left" id="prevBtn" aria-label="上一页">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M15 18l-6-6 6-6"></path>
+    </svg>
+  </button>
+  <button class="nav-btn right" id="nextBtn" aria-label="下一页">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M9 18l6-6-6-6"></path>
+    </svg>
+  </button>
+
+  <!-- 烟花画布 -->
+  <canvas id="confettiCanvas"></canvas>
+
+  <!-- 音频元素 -->
+  <audio id="bgmAudio" loop preload="auto">
+    <source src="audio/bgm.wav" type="audio/wav">
+    <source src="audio/bgm.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- 心形粒子容器 -->
+  <div class="heart-floats" id="heartFloats"></div>
+
   <div class="app">
-    <div class="pager" aria-live="polite">
-      <div class="dots" id="dots"></div>
-      <div class="pageCount" id="pageCount">1/6</div>
-    </div>
+    <div class="scroller" id="scroller">
 
-    <button class="nav-btn left" id="prevBtn" aria-label="上一章">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M15 18l-6-6 6-6"></path>
-      </svg>
-    </button>
-    <button class="nav-btn right" id="nextBtn" aria-label="下一章">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M9 18l6-6-6-6"></path>
-      </svg>
-    </button>
-
-    <!-- 音乐播放器音频：按要求预留音频路径。 -->
-    <!-- 你可以把真正的音乐替换为 audio/bgm.mp3（并删除 bgm.wav 也行）。 -->
-    <!-- 为了保证页面“至少能播放”，这里先用 bgm.wav 占位兜底。 -->
-    <audio id="bgmAudio" preload="auto" loop>
-      <source src="audio/bgm.wav" type="audio/wav">
-      <source src="audio/bgm.mp3" type="audio/mpeg">
-    </audio>
-
-    <canvas id="confettiCanvas" aria-hidden="true"></canvas>
-    <div class="heart-floats" id="heartFloats" aria-hidden="true"></div>
-
-    <div class="scroller" id="scroller" role="region" aria-label="年度总结横向滑动章节">
       <!-- =============== 第 1 页：封面 =============== -->
-      <section class="card cover" data-index="0" aria-label="年度封面">
+      <section class="card cover" data-index="0" aria-label="封面">
         <div class="sea-ornament-layer" aria-hidden="true">
-          <div class="sea-orn reveal" style="--d:120ms; left:-10px; top:120px;">🐚</div>
-          <div class="sea-orn small reveal" style="--d:170ms; right:-8px; top:86px;">🕊️</div>
-          <div class="sea-orn reveal" style="--d:220ms; left:44px; bottom:110px;">🌊</div>
+          <div class="sea-orn small reveal" style="--d:120ms; left:-8px; top:90px;">✦</div>
+          <div class="sea-orn reveal" style="--d:170ms; right:-10px; top:150px;">⭐</div>
+          <div class="sea-orn reveal" style="--d:230ms; left:20px; bottom:130px;">🧊</div>
         </div>
         <div class="content">
-          <div class="kicker reveal" style="--d:70ms;">
-            <span class="spark" aria-hidden="true"></span>
-            <span style="margin-left:10px; letter-spacing:2px; text-transform:uppercase; font-family:'Playfair Display',serif;">SEA BREEZE • MY DEAR</span>
-          </div>
-
-          <h1 class="h1 reveal" style="--d:160ms;">
-            <span class="shine">✨ 我们的年度报告 ✨</span>
+          <div class="kicker reveal" style="--d:80ms;">相识回忆</div>
+          <h1 class="h1 reveal" style="--d:140px;">
+            <span class="spark"></span>
+            <span class="shine">我们的故事</span>
+            <span class="spark"></span>
           </h1>
-
-          <div class="stats-row">
-            <div class="stat-card glass reveal" style="--d:240ms;">
+          <div class="stats-row reveal" style="--d:200ms;">
+            <div class="stat-card glass">
               <div class="kicker">相识天数</div>
               <div class="big-num" id="meetDays1">0</div>
-              <div class="num-sub">相识于 <b>2025年9月19日</b>，海风把你吹得更近。</div>
+              <div class="num-sub" style="margin-top:8px;">从 <b>2025年9月19日</b> 开始</div>
             </div>
-
-            <div class="ring-wrap glass reveal" style="--d:280ms;">
-              <div class="kicker">陪伴进度</div>
-              <div class="ring parallax" id="ringMeet" style="--p:40;" data-parallax="0.22">
+            <div class="ring-wrap glass">
+              <div class="ring" id="ringMeet" style="--p:0">
                 <div class="inner">
                   <div class="pct" id="meetPercentText">0%</div>
-                  <div class="lbl">与你的潮汐同步</div>
+                  <div class="lbl">回忆</div>
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="pacha-sil reveal parallax" style="--d:320ms; left:auto; right:18px;" data-parallax="0.18" aria-hidden="true">
-            <div style="display:flex; flex-direction:column; align-items:center; gap:6px;">
-              <div style="font-size:36px;">🐶</div>
-              <div style="font-size:12px; color:var(--muted); letter-spacing:.2px;">pachacco</div>
-            </div>
+          <div class="pacha-sil" aria-hidden="true">
+            <div style="font-size:46px;">🐾</div>
           </div>
 
           <div class="swipe-hint reveal" style="--d:380ms;">
             <div>
               <div class="hint-title">让海风带路</div>
-              <div class="hint-sub">向左滑：把想念吹成更清晰的故事</div>
+              <div class="hint-sub">向左滑：把想念吹成更清晰的故事（其实我觉得你会喜欢海，因为是你喜欢的蓝色）</div>
             </div>
             <div class="arrow-pill" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1299,7 +1633,7 @@
             <div class="quote reveal" style="--d:150ms;">
               <div class="kicker">潮汐记得</div>
               <div class="h2" style="margin-top:8px;">四季也学会了想你</div>
-              <div class="num-sub" style="margin-top:10px;">金冬天像一束珍珠蓝，把想念写成故事。</div>
+              <div class="num-sub" style="margin-top:10px;">珍珠蓝的话语是想念，对你的想念四季不败</div>
             </div>
           </div>
 
@@ -1316,8 +1650,8 @@
 
           <div class="swipe-hint reveal" style="--d:320ms;">
             <div>
-                <div class="hint-title">下一段：你的声音</div>
-                <div class="hint-sub">继续向左滑，听见第一次通话的海风</div>
+                <div class="hint-title">下一段：一些必不可少的开端（？</div>
+                <div class="hint-sub">继续向左滑</div>
             </div>
             <div class="arrow-pill" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1357,9 +1691,9 @@
 
             <div class="glass reveal" style="--d:140ms; padding:16px 14px; width:168px;">
               <div class="kicker">你在 / 我在</div>
-              <div style="font-family:'Playfair Display',serif; font-size:16px; margin-top:6px; font-weight:700;">“宿舍 & 顶楼”</div>
+              <div style="font-family:'Playfair Display',serif; font-size:16px; margin-top:6px; font-weight:700;">"宿舍 & 顶楼"</div>
               <div class="muted" style="margin-top:8px; font-size:13px; line-height:1.4;">连线穿过海风，变成灯光的方向</div>
-              <div style="margin-top:10px; font-size:14px; opacity:.9;">piano小羊把节拍铺成温柔的毯子</div>
+              <div style="margin-top:10px; font-size:14px; opacity:.9;">喜欢有你陪着我的所有时间</div>
             </div>
           </div>
 
@@ -1368,11 +1702,11 @@
             <div class="bubbles">
               <div class="bubble">
                 <div class="place">宿舍</div>
-                <div class="date">第一次打电话：<b>1月17日</b><br/>（那一秒，时间变得很慢）</div>
+                <div class="date">我在宿舍无所事事<b>因为学校安排攒了一肚子怨气</b><br/>（那一刻我们之后的熟悉起来终于有了开端）</div>
               </div>
               <div class="bubble">
                 <div class="place">小区顶楼</div>
-                <div class="date">第一次打电话：<b>1月17日</b><br/>（风很大，但你声音很暖）</div>
+                <div class="date">那天你小区停电<b>我们聊天也没有断过</b><br/>（我能听到那边的风声，但也丝毫没减弱你声音带来的安心感）</div>
               </div>
             </div>
           </div>
@@ -1387,93 +1721,22 @@
                 </svg>
               </div>
               <div>
-                <div class="title">第一次游戏：2月20日</div>
-                <div class="sub">战绩风格条（默契值）</div>
+                <div class="title">第一次游戏：2月20日（我终于撬开你的嘴了。其实时间准不准我也不知道我没印象了，也没有特别专门的去搜）</div>
+                <div class="sub">其实我们互殴的时候互相红温我到现在也依旧觉得很好玩。</div>
+                <div class="sub">默契值（其实我想把右边的条改成0的但是应该还是有的。）</div>
               </div>
             </div>
             <div class="meter" aria-hidden="true"></div>
           </div>
 
           <div class="call bottom-line reveal" style="--d:340ms;">
-            顶楼的风好大，但听到你声音就像回到海岸。<br/>
-            就像那只 piano 小羊，把节拍铺成安静的温度。
+            愿这一切都能成为开端，永远都没有结局
           </div>
         </div>
       </section>
 
-      <!-- =============== 第 4 页：挚爱博物馆 =============== -->
-      <section class="card museum" data-index="3" aria-label="挚爱博物馆">
-        <div class="sea-ornament-layer" aria-hidden="true">
-          <div class="sea-orn reveal" style="--d:120ms; left:-10px; top:100px;">❄️</div>
-          <div class="sea-orn small reveal" style="--d:170ms; right:-8px; top:120px;">🍛</div>
-          <div class="sea-orn reveal" style="--d:220ms; left:30px; bottom:150px;">🎹</div>
-          <div class="sea-orn small reveal" style="--d:260ms; right:16px; bottom:80px;">🐾</div>
-        </div>
-        <div class="content">
-          <div class="museum-top">
-            <div>
-              <div class="kicker reveal" style="--d:70ms;">年度歌手板块感</div>
-              <div class="museum-title reveal" style="--d:130ms;">你的世界依旧可爱</div>
-              <div class="museum-sub reveal" style="--d:170ms;">这些都是你喜欢的：金冬天、咖喱狗、piano小羊、帕恰狗。它们在海风里也亮着。</div>
-            </div>
-            <div class="note-bounce reveal" style="--d:210ms;" aria-hidden="true">♪</div>
-          </div>
-
-          <div class="album-grid" aria-label="挚爱角色列表">
-            <div class="album reveal" style="--d:240ms;">
-              <div class="cover">
-                <img src="images/winter.jpg" alt="金冬天" loading="lazy" data-fallback="winter" />
-                <div class="placeholder" data-placeholder="winter" aria-hidden="true">
-                  <div class="ico">❄️</div><div>替换 images/winter.jpg</div>
-                </div>
-              </div>
-              <div class="name">金冬天</div>
-              <div class="desc">珍珠蓝的守护者，一靠近就更有光。</div>
-            </div>
-
-            <div class="album reveal" style="--d:270ms;">
-              <div class="cover">
-                <img src="images/curry-dog.jpg" alt="咖喱狗" loading="lazy" data-fallback="curry" />
-                <div class="placeholder" data-placeholder="curry" aria-hidden="true">
-                  <div class="ico">🍛</div><div>替换 images/curry-dog.jpg</div>
-                </div>
-              </div>
-              <div class="name">咖喱狗</div>
-              <div class="desc">快乐的爪印与“离谱”的日常担当。</div>
-            </div>
-
-            <div class="album reveal" style="--d:300ms;">
-              <div class="cover">
-                <img src="images/piano-sheep.jpg" alt="piano小羊" loading="lazy" data-fallback="sheep" />
-                <div class="placeholder" data-placeholder="sheep" aria-hidden="true">
-                  <div class="ico">🎵</div><div>替换 images/piano-sheep.jpg</div>
-                </div>
-              </div>
-              <div class="name">piano小羊</div>
-              <div class="desc">把节拍趴成毯子，温柔地盖住思念。</div>
-            </div>
-
-            <div class="album reveal" style="--d:330ms;">
-              <div class="cover">
-                <img src="images/pachacco.jpg" alt="帕恰狗" loading="lazy" data-fallback="pacha" />
-                <div class="placeholder" data-placeholder="pacha" aria-hidden="true">
-                  <div class="ico">🐶</div><div>替换 images/pachacco.jpg</div>
-                </div>
-              </div>
-              <div class="name">帕恰狗</div>
-              <div class="desc">像小太阳一样出现，又像回忆一样闪烁。</div>
-            </div>
-          </div>
-
-          <div class="footer-note reveal" style="--d:380ms;">
-            愿海风替我把你心里的柔软继续存好。<br/>
-            也是我想把“未来”也照亮的理由。
-          </div>
-        </div>
-      </section>
-
-      <!-- =============== 第 5 页：年度聊天记录精选 =============== -->
-      <section class="card chat" data-index="4" aria-label="年度聊天记录精选">
+      <!-- =============== 第 4 页：年度聊天记录精选 =============== -->
+      <section class="card chat" data-index="3" aria-label="年度聊天记录精选">
         <div class="sea-ornament-layer" aria-hidden="true">
           <div class="sea-orn small reveal" style="--d:120ms; left:-10px; top:110px;">💬</div>
           <div class="sea-orn reveal" style="--d:180ms; right:-10px; top:150px;">🌙</div>
@@ -1482,8 +1745,8 @@
         <div class="content">
           <div class="title-row">
             <div>
-              <div class="kicker reveal" style="--d:70ms;">聊天记录集锦</div>
-              <div class="title reveal" style="--d:120ms;">年度对话精选</div>
+              <div class="kicker reveal" style="--d:70ms;">对话精选！</div>
+              <div class="title reveal" style="--d:120ms;">我最喜欢的一段对话：</div>
             </div>
             <div class="tiny reveal" style="--d:160ms;">圆润半透明气泡<br/>像海风一样轻轻贴近</div>
           </div>
@@ -1492,15 +1755,15 @@
             <div class="msg">
               <div class="avatar" aria-hidden="true">🐶</div>
               <div class="bubble">
-                咖喱狗又去追海风了…<br/>
-                它对着浪声“嗅来嗅去”，我笑到心里发软。<span class="time">10:12</span>
+                晚上去找你可以吗！<br/>
+                你当我想去找你！<span class="time">16：28</span>
               </div>
             </div>
 
             <div class="msg me">
               <div class="bubble">
-                金冬天回归那天，我被海风推得更想你。<br/>
-                那种“终于来了”的感觉，一整个把我抱住了。<span class="time">16:48</span>
+                因为有你在，本来我应该是说不出话的状态<br/>
+                但是我还是忍不住给你发消息，因为我会因为这个心情好一点。<span class="time">13：40</span>
               </div>
               <div class="avatar" aria-hidden="true">❄️</div>
             </div>
@@ -1508,19 +1771,15 @@
             <div class="msg">
               <div class="avatar" aria-hidden="true">🎧</div>
               <div class="bubble">
-                <div class="voice">
-                  <div class="label">语音消息</div>
-                  <div class="wavebars" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
-                  <div style="color:rgba(255,255,255,.66); font-size:12px; white-space:nowrap;">12s</div>
-                </div>
-                <span class="time">昨天 22:09</span>
+                我从来没有想过会有一天会跟你一起听歌（2.26）<br/>
+                你要跟我一起听歌吗（？  （3.20）<span class="time">16:20</span>
               </div>
             </div>
 
             <div class="msg me">
               <div class="bubble">
-                打游戏那一波默契太离谱了。<br/>
-                你刚那下我就知道会赢。<span class="time">02/20</span>
+                你被打下去一百四十多次还想玩吗！<br/>
+                你咋就不提把我打下去193次。<span class="time">03/06</span>
               </div>
               <div class="avatar" aria-hidden="true">🎮</div>
             </div>
@@ -1528,14 +1787,14 @@
 
           <div class="bottom-tip reveal" style="--d:340ms;">
             每一次对话都像潮水回声：<br/>
-            <span style="color:rgba(234,241,255,.78);">你负责发光，我负责把它珍藏成永远。</span>
+            <span style="color:rgba(234,241,255,.78);">你负责发光，我负责把它珍藏成永远。每一个话题每一个陪伴，哪怕回忆不起，也永远在潜意识里熠熠发光。</span>
             <div class="note-bounce" aria-hidden="true">♪</div>
           </div>
         </div>
       </section>
 
-      <!-- =============== 第 6 页：生日庆祝（蜘蛛纸牌） =============== -->
-      <section class="card bday-game" data-index="5" aria-label="生日庆祝（蜘蛛纸牌）">
+      <!-- =============== 第 5 页：生日庆祝（蜘蛛纸牌） =============== -->
+      <section class="card bday-game" data-index="4" aria-label="生日庆祝（蜘蛛纸牌）">
         <div class="sea-ornament-layer" aria-hidden="true">
           <div class="sea-orn reveal" style="--d:120ms; left:-10px; top:120px;">🕷️</div>
           <div class="sea-orn small reveal" style="--d:180ms; right:-8px; top:100px;">🧵</div>
@@ -1543,10 +1802,10 @@
         </div>
 
         <div class="content">
-          <div class="kicker reveal" style="--d:70ms;">生日庆祝 • 蜘蛛纸牌</div>
+          <div class="kicker reveal" style="--d:70ms;">蜘蛛纸牌</div>
           <div class="h2 reveal" style="--d:120ms; font-size:26px;">通关后，复制密码</div>
           <div class="muted reveal" style="--d:170ms; font-size:13px; line-height:1.6;">
-            规则简化版：用同花色的降序序列移动；凑成完整 13 张会自动收回。尽量别急，海风会把你推向胜利。
+          
           </div>
 
           <div class="spider-wrap reveal" style="--d:240ms;">
@@ -1592,8 +1851,8 @@
         </div>
       </section>
 
-      <!-- =============== 第 7 页：生日祝福 & 未来约定 =============== -->
-      <section class="card bday" data-index="6" aria-label="生日祝福 & 未来约定">
+      <!-- =============== 第 6 页：生日祝福 & 未来约定 =============== -->
+      <section class="card bday" data-index="5" aria-label="生日祝福 & 未来约定">
         <div class="sea-ornament-layer" aria-hidden="true">
           <div class="sea-orn reveal" style="--d:120ms; left:-10px; top:120px;">🎂</div>
           <div class="sea-orn small reveal" style="--d:180ms; right:-8px; top:100px;">🎐</div>
@@ -1603,7 +1862,7 @@
           <div class="top">
             <div>
               <div class="kicker reveal" style="--d:70ms;">生日祝福</div>
-                <div class="hand reveal" style="--d:120ms;">愿你每一次低潮，都被温柔接住。</div>
+                <div class="hand reveal" style="--d:120ms;">愿你每一次低潮，都被温柔接住。（最好是被我接住嘻嘻。）</div>
             </div>
             <div class="cake reveal" style="--d:160ms;" aria-hidden="true">
               <svg viewBox="0 0 64 64" fill="none">
@@ -1623,7 +1882,7 @@
             <div>
               <div class="label">距离下一个生日还有</div>
               <div class="muted" style="margin-top:8px; font-size:13px; line-height:1.4;">
-                生日：<b>4月2日</b>（动态计算）
+                生日：<b>4月2日</b>
               </div>
             </div>
             <div class="days" id="bdayDays">0</div>
@@ -1631,10 +1890,13 @@
 
           <div class="blessing reveal" style="--d:260ms;">
             <div style="position:relative; z-index:2;">
-              金冬天那种“回归”的光，会一直住在你身边。<br/>
-              也希望你在未来的每一个低潮，都能被海风轻轻托起。<br/><br/>
+              <br/>
+              我知道，有些日子会让你突然坠入深海——或许是某个相似的感受、一段无意的对话，甚至是毫无来由的瞬间，那些你以为早已结痂的伤口会重新泛起潮汐。你不想被触碰，却又害怕被遗忘。<br>
+              希望你在未来的每一个低潮，都能被海风轻轻托起。不必急着“好起来”，不必强迫自己“向前看”。就像潮水有涨有落，情绪的海也是。当浪头打过来的时候，你可以沉下去一会儿——但请记得，海面之上总有风在等你，它会用最轻的力道，把你一点一点托回光的所在。
+              <br/>
               <span style="color:rgba(255,255,255,.78);">
-                我们继续一起：从电话里的风声，到游戏里的默契，再到聊天里的笑点。
+                我想一直在你身边。
+                我们继续一起：从电话里的风声，到游戏里的默契（实际也没很多默契。），再到聊天里的笑点（不要笑我就行，算了你的话也不是不行）。
               </span>
             </div>
             <div class="heartmark" aria-hidden="true">💙</div>
@@ -1650,43 +1912,50 @@
         </div>
       </section>
 
-      <!-- =============== 第 8 页：结尾寄语 =============== -->
-      <section class="card end-page" data-index="7" aria-label="结尾寄语">
+      <!-- =============== 第 7 页：结尾寄语（重新设计） =============== -->
+      <section class="card end-page" data-index="6" aria-label="结尾寄语">
         <div class="sea-ornament-layer" aria-hidden="true">
           <div class="sea-orn reveal" style="--d:120ms; left:-10px; top:110px;">🌙</div>
           <div class="sea-orn small reveal" style="--d:180ms; right:-8px; top:160px;">🫧</div>
           <div class="sea-orn reveal" style="--d:240ms; left:28px; bottom:120px;">🦋</div>
         </div>
 
+        <div class="ocean-waves" aria-hidden="true"></div>
+        <div class="aurora-borealis" aria-hidden="true"></div>
+        <div class="star-particles" aria-hidden="true" id="starParticles"></div>
+        
         <div class="content">
-          <div class="kicker reveal" style="--d:70ms;">结尾寄语</div>
-          <div class="end-message reveal" style="--d:130ms;">
-            <div class="end-text">
-              希望有无数个有你的明天，也期待着与你一起度过每一个值得留念的日子。
+          <div class="end-header reveal" style="--d:70ms;">
+            <div class="kicker">结尾寄语</div>
+            <h2 class="end-title">海风会把想念吹成永恒</h2>
+            <div class="end-subtitle">每一个明天都想有你</div>
+          </div>
+
+          <div class="message-container">
+            <div class="end-message reveal" style="--d:130ms;">
+              <div class="end-text">
+                希望有无数个有你的明天，也期待着与你一起度过每一个值得留念的日子。
+                从电话里的风声，到游戏里的默契（其实没默契），再到聊天里的笑点，
+                我们继续一起书写属于我们的故事。
+              </div>
             </div>
+
+            <div class="user-message-section reveal" style="--d:200ms;">
+              <div class="user-message-label">💫 我想对你说的话</div>
+              <div id="userMessageContent" class="user-message-content">
+                在未来的不知道多久多久之后，我也想和你一起去看海，一起在沙滩上写字。你给我拍过的海边真的很诱人，那片天空也美的勾人眼睛
+                不知道多久以后能跟你去游乐园玩，你喜欢的东西我都很感兴趣，不管是你的圈子还是你的一些小小爱好，
+                以后的日子还很长很长，我想慢慢把你喜欢的世界，都变成我也喜欢的样子。然后我们就可以，一起喜欢着同一片海，同一个游乐园，同一种快乐。
+              </div>
+            </div>
+
+            <button id="revealMessageBtn" class="reveal-message-btn reveal" style="--d:280ms;" type="button">
+              <span class="btn-text">
+                <span class="btn-icon">💌</span>
+                <span>看看我想对你说的话</span>
+              </span>
+            </button>
           </div>
-        </div>
-
-        <button id="endJumpBtn" class="end-jump-btn reveal" style="--d:200ms;" type="button">
-          看看我想对你说的话
-        </button>
-      </section>
-
-      <!-- =============== 第 9 页：你想对我说（代码留空） =============== -->
-      <section class="card user-say" data-index="8" aria-label="你想对我说">
-        <div class="sea-ornament-layer" aria-hidden="true">
-          <div class="sea-orn reveal" style="--d:120ms; left:-10px; top:120px;">✉️</div>
-          <div class="sea-orn small reveal" style="--d:180ms; right:-8px; top:170px;">⭐</div>
-          <div class="sea-orn reveal" style="--d:240ms; left:26px; bottom:120px;">🌊</div>
-        </div>
-
-        <div class="content">
-          <div class="kicker reveal" style="--d:70ms;">留给你的那句话</div>
-          <div class="user-say-card reveal" style="--d:130ms;">
-            <!-- TODO: 在这里填写你想对她说的话（保持代码为空也可以） -->
-            <div id="userSayPlaceholder" class="user-say-placeholder"></div>
-          </div>
-          <!-- 你也可以在下面继续加自定义元素/样式 -->
         </div>
       </section>
     </div>
@@ -1947,17 +2216,14 @@
     const SP_TILE_GAP = 16; // card vertical spacing
 
     function makeDeck(){
-      // 更贴近 Windows：2-suit 玩法（移动序列必须“同花色+连续递减”，完成消除也要求同花色）
-      // 总牌数保持为 104 张（8 组 × 13）
-      const suits = ["♠", "♥"];
-      const deckCountPerSuit = 4; // 2 suits * 4 * 13 = 104
+      // Windows 最简单难度：单花色（只有黑桃）
+      // 总牌数 104 张（8 组 × 13 张同花色）
+      const suit = "♠";
+      const deckCount = 8; // 8 组 × 13 = 104
       const deck = [];
-      for(let si=0; si<suits.length; si++){
-        const suit = suits[si];
-        for(let d=0; d<deckCountPerSuit; d++){
-          for(let r=1; r<=13; r++){
-            deck.push({ id: `${si}-${d}-${r}-${Math.random().toString(16).slice(2)}`, rank:r, suit, faceUp:false });
-          }
+      for(let d=0; d<deckCount; d++){
+        for(let r=1; r<=13; r++){
+          deck.push({ id: `${d}-${r}-${Math.random().toString(16).slice(2)}`, rank:r, suit, faceUp:false });
         }
       }
       return deck;
@@ -1988,7 +2254,7 @@
     }
 
     function isFaceUpSequence(col, startIdx){
-      // Windows 规则：可移动序列必须全部面朝上，且点数严格递减（同列内部可混花色）
+      // Windows 单花色规则：可移动序列必须全部面朝上，且点数严格递减
       for(let j=startIdx; j<col.length; j++){
         if(!col[j].faceUp) return false;
       }
@@ -1999,10 +2265,10 @@
     }
 
     function canDropSequence(seqBottomCard, destCol){
-      // Windows：构筑按点数递减，花色不限制；空列只能放 K 开头
+      // Windows 单花色规则：构筑按点数递减；空列可以放任何牌或序列
       const destTopIdx = getLastFaceUpIndex(destCol);
       if(destTopIdx === -1){
-        return seqBottomCard.rank === 13;
+        return true; // 空列可以放任何牌或序列
       }
       const destTopCard = destCol[destTopIdx];
       return destTopCard.rank === seqBottomCard.rank + 1;
@@ -2035,8 +2301,8 @@
           tile.className = "spider-tile" + (c.faceUp ? "" : " faceDown");
           tile.dataset.col = String(colIdx);
           tile.dataset.idx = String(j);
-          // 用 bottom 布局，让数组 index 0 对应“底部”，与正常蜘蛛纸牌一致
-          tile.style.bottom = (j*SP_TILE_GAP) + "px";
+          // 修改为自上到下排列：使用 top 定位，数组 index 0 对应顶部
+          tile.style.top = (j*SP_TILE_GAP) + "px";
 
           if(c.faceUp){
             const rankText =
@@ -2091,9 +2357,8 @@
         const okAllUp = top13.every(c => c.faceUp);
         if(!okAllUp) break;
         if(top13[0].rank !== 13) break;
+        // Windows 单花色：只需要检查 K→A 递减序列，不需要检查花色
         let ok = true;
-        const suit0 = top13[0].suit;
-        if(!top13.every(c => c.suit === suit0)) ok = false;
         for(let i=1; i<top13.length; i++){
           if(top13[i].rank !== top13[i-1].rank - 1){ ok=false; break; }
         }
@@ -2378,10 +2643,26 @@
           const idx = parseInt(tile.dataset.idx, 10);
           if(!spiderState) return;
 
-          // 只要点到其它列，就尝试落下（轻量符合直觉交互）
           const colCards = spiderState.cols[colIdx];
           const card = colCards[idx];
           if(!card || !card.faceUp) return;
+
+          // Windows 交互：点击已选中的序列取消选择
+          if(spiderSelected && spiderSelected.fromCol === colIdx && spiderSelected.startIdx === idx){
+            spiderSelected = null;
+            renderSpider();
+            return;
+          }
+
+          // 只有点到其它列，就尝试落下（轻量符合直觉交互）
+          if(spiderSelected && spiderSelected.fromCol !== colIdx){
+            const movingSeq = spiderState.cols[spiderSelected.fromCol].slice(spiderSelected.startIdx);
+            const seqBottom = movingSeq[0];
+            if(canDropSequence(seqBottom, colCards)){
+              attemptDrop(colIdx);
+              return;
+            }
+          }
 
           // 只有当 idx..top 能形成降序连续才可选
           if(!isFaceUpSequence(colCards, idx)) return;
@@ -2562,15 +2843,98 @@
       return card?.classList?.contains("bday");
     }
 
-    // 结尾页跳转按钮
-    const endJumpBtn = $("#endJumpBtn");
-    if(endJumpBtn){
-      endJumpBtn.addEventListener("click", ()=>{
-        const target = $(".card.user-say");
-        if(!target) return;
-        const idx = cards.indexOf(target);
-        if(idx >= 0) scrollToIndex(idx, true);
+    // 结尾页显示用户消息按钮
+    const revealMessageBtn = $("#revealMessageBtn");
+    const userMessageContent = $("#userMessageContent");
+    const starParticles = $("#starParticles");
+    
+    if(revealMessageBtn && userMessageContent){
+      let messageRevealed = false;
+      revealMessageBtn.addEventListener("click", ()=>{
+        if(!messageRevealed){
+          // 显示已有的消息内容
+          userMessageContent.classList.add("show");
+          revealMessageBtn.querySelector(".btn-text span:last-child").textContent = "收起想说的话";
+          messageRevealed = true;
+          
+          // 触发星星爆发效果
+          triggerStarBurst();
+          triggerMiniStarBurst();
+        } else {
+          // 隐藏消息内容
+          userMessageContent.classList.remove("show");
+          revealMessageBtn.querySelector(".btn-text span:last-child").textContent = "看看我想对你说的话";
+          messageRevealed = false;
+        }
       });
+    }
+    
+    // 星星爆发效果
+    function triggerStarBurst(){
+      if(!starParticles) return;
+      for(let i = 0; i < 15; i++){
+        setTimeout(()=>{
+          const star = document.createElement("div");
+          star.className = "star";
+          star.style.left = (40 + Math.random() * 20) + "%";
+          star.style.top = (40 + Math.random() * 20) + "%";
+          star.style.animation = `starBurst 1.5s var(--easeOut) forwards`;
+          starParticles.appendChild(star);
+          setTimeout(()=> star.remove(), 1500);
+        }, i * 50);
+      }
+    }
+    
+    // 小星星爆发效果
+    function triggerMiniStarBurst(){
+      if(!starParticles) return;
+      for(let i = 0; i < 8; i++){
+        setTimeout(()=>{
+          const star = document.createElement("div");
+          star.className = "star";
+          star.style.left = (45 + Math.random() * 10) + "%";
+          star.style.top = (45 + Math.random() * 10) + "%";
+          star.style.animation = `miniStarBurst 0.8s var(--easeOut) forwards`;
+          starParticles.appendChild(star);
+          setTimeout(()=> star.remove(), 800);
+        }, i * 30);
+      }
+    }
+    
+    // 添加星星爆发动画
+    const starBurstStyle = document.createElement('style');
+    starBurstStyle.textContent = `
+      @keyframes starBurst{
+        0%{ opacity:0; transform: scale(0) rotate(0deg); }
+        50%{ opacity:1; transform: scale(1.5) rotate(180deg); }
+        100%{ opacity:0; transform: scale(0.5) rotate(360deg) translateY(-50px); }
+      }
+      @keyframes miniStarBurst{
+        0%{ opacity:0; transform: scale(0); }
+        50%{ opacity:1; transform: scale(1); }
+        100%{ opacity:0; transform: scale(0.3) translateY(-20px); }
+      }
+    `;
+    document.head.appendChild(starBurstStyle);
+    
+    // 初始化星星粒子
+    createStarParticles();
+    
+    // 当结尾页面激活时重新生成星星
+    const observer = new MutationObserver((mutations)=>{
+      mutations.forEach((mutation)=>{
+        if(mutation.type === 'attributes' && mutation.attributeName === 'class'){
+          const target = mutation.target;
+          if(target.classList.contains('end-page') && target.classList.contains('activated')){
+            createStarParticles();
+          }
+        }
+      });
+    });
+    
+    const endPage = document.querySelector('.end-page');
+    if(endPage){
+      observer.observe(endPage, { attributes: true });
     }
 
     if(giftBtn){
