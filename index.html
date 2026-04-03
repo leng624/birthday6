@@ -690,10 +690,58 @@
       font-size:13px;
     }
 
-    /* 通用文本优化 */
+    /* 性能优化：硬件加速和减少重绘 */
     * {
       word-wrap: break-word;
       overflow-wrap: break-word;
+      -webkit-tap-highlight-color: transparent;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+    
+    /* 允许文本选择的元素 */
+    .bubble, .user-message-content, input, textarea {
+      -webkit-user-select: text;
+      -moz-user-select: text;
+      -ms-user-select: text;
+      user-select: text;
+    }
+    
+    /* 硬件加速关键元素 */
+    .card, .scroller, .bubble, .game-badge, .spider-wrap {
+      transform: translateZ(0);
+      -webkit-transform: translateZ(0);
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      perspective: 1000;
+      -webkit-perspective: 1000;
+    }
+    
+    /* 移动端优化 */
+    @media (max-width: 768px) {
+      .spider-tile {
+        width: 32px;
+        height: 44px;
+        font-size: 10px;
+      }
+      .spider-col {
+        width: 34px;
+      }
+      .spider-wrap {
+        padding: 10px 8px;
+        gap: 8px;
+      }
+      .game-badge {
+        padding: 12px 10px;
+        gap: 8px;
+      }
+      .bubble {
+        font-size: 12px;
+        padding: 12px 14px;
+      }
     }
     
     /* 页面 4：聊天记录精选 */
@@ -932,6 +980,9 @@
       background: rgba(255,255,255,.62);
       backdrop-filter: blur(10px);
       box-shadow: 0 18px 60px rgba(10,60,120,.10);
+      transform: translateZ(0);
+      will-change: transform;
+      -webkit-overflow-scrolling: touch;
     }
     .spider-controls{
       display:flex;
@@ -978,6 +1029,21 @@
       cursor:pointer;
       background: rgba(255,255,255,.78);
       color: rgba(11,59,91,.88);
+      transform: translateZ(0);
+      will-change: transform, opacity;
+      transition: transform 0.15s ease-out, box-shadow 0.15s ease-out;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .spider-tile:hover, .spider-tile:active{
+      transform: translateZ(0) scale(1.05);
+      box-shadow: 0 15px 35px rgba(10,60,120,.12);
+      z-index: 10;
+    }
+    .spider-tile.selected{
+      transform: translateZ(0) translateY(-2px) scale(1.08);
+      box-shadow: 0 18px 40px rgba(42,108,255,.25);
+      z-index: 15;
+      border-color: rgba(42,108,255,.4);
     }
     .spider-tile.faceDown{
       background: linear-gradient(180deg, rgba(42,108,255,.18), rgba(255,255,255,.55));
@@ -2036,6 +2102,16 @@
       scroller.style.scrollSnapType = "x mandatory";
     });
 
+    // 滚动性能优化：使用 requestAnimationFrame 节流
+    let rafId = null;
+    function updateTransformsThrottled(){
+      if(rafId) return;
+      rafId = requestAnimationFrame(()=>{
+        updateTransforms();
+        rafId = null;
+      });
+    }
+
     // 视差与激活逻辑
     // 性能优化：把每张卡片里的 .parallax 元素及其速度预先缓存，避免滚动时反复 querySelector/getAttribute
     const parallaxMetaByCard = cards.map(card=>{
@@ -2079,7 +2155,7 @@
       if(rafToken) return;
       rafToken = requestAnimationFrame(updateTransforms);
     }
-    scroller.addEventListener("scroll", onScroll, { passive:true });
+    scroller.addEventListener("scroll", updateTransformsThrottled, { passive:true });
 
     // 数字递增
     function countUp(el, to, duration=1100){
@@ -2552,45 +2628,47 @@
       });
     }
 
-    // 拖拽（pointerdown/move/up）：更符合“正常蜘蛛”直觉
+    // 拖拽优化：减少事件频率，提升移动端体验
     let spiderDragActive = false;
     let spiderDragPointerId = null;
     let spiderDragMoved = false;
     let spiderDragStartX = 0;
     let spiderDragStartY = 0;
     let spiderIgnoreClickUntil = 0;
-    const DRAG_THRESHOLD_PX = 8;
+    const DRAG_THRESHOLD_PX = 12; // 增加阈值减少误触
 
     if(spiderBoard){
       spiderBoard.style.touchAction = "none";
 
       spiderBoard.addEventListener("pointerdown", (e)=>{
-        if(!spiderState) return;
-        const tile = e.target.closest?.(".spider-tile");
+        const tile = e.target.closest(".spider-tile");
         if(!tile) return;
-        const colIdx = parseInt(tile.dataset.col, 10);
-        const idx = parseInt(tile.dataset.idx, 10);
-        if(Number.isNaN(colIdx) || Number.isNaN(idx)) return;
-
-        const colCards = spiderState.cols[colIdx];
-        const card = colCards?.[idx];
-        if(!card || !card.faceUp) return;
-        if(!isFaceUpSequence(colCards, idx)) return;
-
-        spiderSelected = { fromCol: colIdx, startIdx: idx };
-        renderSpider();
-
+        
+        // 防抖处理
+        const now = Date.now();
+        if(now < spiderIgnoreClickUntil) return;
+        
         spiderDragActive = true;
         spiderDragPointerId = e.pointerId;
         spiderDragMoved = false;
         spiderDragStartX = e.clientX;
         spiderDragStartY = e.clientY;
-        spiderIgnoreClickUntil = 0;
-
-        // 防止在拖拽时触发 click 逻辑
+        
+        // 立即选中卡片，提供视觉反馈
+        const colIdx = parseInt(tile.dataset.col, 10);
+        const idx = parseInt(tile.dataset.idx, 10);
+        if(!spiderState) return;
+        
+        const colCards = spiderState.cols[colIdx];
+        const card = colCards[idx];
+        if(card && card.faceUp && isFaceUpSequence(colCards, idx)){
+          spiderSelected = { fromCol: colIdx, startIdx: idx };
+          renderSpider();
+        }
+        
+        spiderBoard.setPointerCapture(e.pointerId);
         e.preventDefault();
-        e.stopPropagation();
-      });
+      }, { passive: false });
 
       // 全局监听，确保从棋盘外抬手也能完成落点
       document.addEventListener("pointermove", (e)=>{
