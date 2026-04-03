@@ -742,6 +742,14 @@
         font-size: 12px;
         padding: 12px 14px;
       }
+      
+      /* 结尾页面移动端优化 */
+      .scrollable-content {
+        flex: 1;
+        overflow-y: auto;
+        padding: 0 20px 20px;
+        -webkit-overflow-scrolling: touch;
+      }
     }
     
     /* 页面 4：聊天记录精选 */
@@ -1997,30 +2005,33 @@
             <div class="end-subtitle">每一个明天都想有你</div>
           </div>
 
-          <div class="message-container">
-            <div class="end-message reveal" style="--d:130ms;">
-              <div class="end-text">
-                希望有无数个有你的明天，也期待着与你一起度过每一个值得留念的日子。
-                从电话里的风声，到游戏里的默契（其实没默契），再到聊天里的笑点，
-                我们继续一起书写属于我们的故事。
+          <!-- 可滚动内容区域 -->
+          <div class="scrollable-content">
+            <div class="message-container">
+              <div class="end-message reveal" style="--d:130ms;">
+                <div class="end-text">
+                  希望有无数个有你的明天，也期待着与你一起度过每一个值得留念的日子。
+                  从电话里的风声，到游戏里的默契（其实没默契），再到聊天里的笑点，
+                  我们继续一起书写属于我们的故事。
+                </div>
               </div>
-            </div>
 
-            <div class="user-message-section reveal" style="--d:200ms;">
-              <div class="user-message-label">💫 我想对你说的话</div>
-              <div id="userMessageContent" class="user-message-content">
-                在未来的不知道多久多久之后，我也想和你一起去看海，一起在沙滩上写字。你给我拍过的海边真的很诱人，那片天空也美的勾人眼睛
-                不知道多久以后能跟你去游乐园玩，你喜欢的东西我都很感兴趣，不管是你的圈子还是你的一些小小爱好，
-                以后的日子还很长很长，我想慢慢把你喜欢的世界，都变成我也喜欢的样子。然后我们就可以，一起喜欢着同一片海，同一个游乐园，同一种快乐。
+              <div class="user-message-section reveal" style="--d:200ms;">
+                <div class="user-message-label">💫 我想对你说的话</div>
+                <div id="userMessageContent" class="user-message-content">
+                  在未来的不知道多久多久之后，我也想和你一起去看海，一起在沙滩上写字。你给我拍过的海边真的很诱人，那片天空也美的勾人眼睛
+                  不知道多久以后能跟你去游乐园玩，你喜欢的东西我都很感兴趣，不管是你的圈子还是你的一些小小爱好，
+                  以后的日子还很长很长，我想慢慢把你喜欢的世界，都变成我也喜欢的样子。然后我们就可以，一起喜欢着同一片海，同一个游乐园，同一种快乐。
+                </div>
               </div>
-            </div>
 
-            <button id="revealMessageBtn" class="reveal-message-btn reveal" style="--d:280ms;" type="button">
-              <span class="btn-text">
-                <span class="btn-icon">💌</span>
-                <span>看看我想对你说的话</span>
-              </span>
-            </button>
+              <button id="revealMessageBtn" class="reveal-message-btn reveal" style="--d:280ms;" type="button">
+                <span class="btn-text">
+                  <span class="btn-icon">💌</span>
+                  <span>看看我想对你说的话</span>
+                </span>
+              </button>
+            </div>
           </div>
         </div>
       </section>
